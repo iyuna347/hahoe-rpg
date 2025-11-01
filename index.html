@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>우리, 하회할까? | Hahoe Guardians</title>
+<link rel="manifest" href="manifest.json">
+<link rel="stylesheet" href="styles.css">
+<meta name="theme-color" content="#0f172a">
+</head>
+<body>
+<header>
+  <h1>우리, 하회할까?</h1>
+  <p class="subtitle">전통·환경·참여의 새로운 공존, 하회 수호단 RPG 🌿</p>
+</header>
+
+<nav class="tabs">
+  <button class="tab active" data-tab="intro">스토리</button>
+  <button class="tab" data-tab="select">캐릭터</button>
+  <button class="tab" data-tab="quests">퀘스트</button>
+  <button class="tab" data-tab="coupon">쿠폰</button>
+</nav>
+
+<main id="app">
+  <section id="tab-intro" class="card">
+    <h2>스토리라인</h2>
+    <p>옛날 하회의 수호신 <strong>농경신(토지신)</strong>은 풍요와 생명을 관장했습니다.
+    그러나 무분별한 쓰레기와 오염으로 <strong>낙동강</strong>이 병들자 분노하였습니다.
+    당신은 <strong>하회 수호단</strong>이 되어 환경 정화와 전통 복원 퀘스트를 수행하고,
+    사라진 탈의 조각을 모아 하회의 풍요를 되찾아야 합니다.</p>
+    <div class="meter"><div id="anger" class="bar" style="width:100%"></div></div>
+    <small class="hint">* 퀘스트를 완료하면 농경신의 분노(게이지)가 가라앉습니다.</small>
+  </section>
+
+  <section id="tab-select" class="card hidden">
+    <h2>1) “우리(We)” : 관계의 재정의 — 하회 수호단 캐릭터 선택</h2>
+    <p class="muted">입장 QR → 설치 없이 웹 접속 → 캐릭터 선택 후 오늘의 미션 시작</p>
+    <div class="grid chars">
+      <button class="char" data-char="양반"><img src="assets/characters/yangban.png"><strong>양반</strong><span>문화해설 +10</span></button>
+      <button class="char" data-char="연이낭자"><img src="assets/characters/yeon.png"><strong>연이낭자</strong><span>협동 보너스 +10</span></button>
+      <button class="char" data-char="또기"><img src="assets/characters/ttogi.png"><strong>또기</strong><span>정화력 +10</span></button>
+      <button class="char" data-char="어진할배"><img src="assets/characters/eojin.png"><strong>어진할배</strong><span>지혜 +10</span></button>
+    </div>
+    <p class="hint">* 캐릭터 이미지는 데모용. 실제 운영 시 공식 가이드에 맞춰 교체.</p>
+  </section>
+
+  <section id="tab-quests" class="card hidden">
+    <h2>2) “하회(Hahoe)” : 경험의 재구성 — 오늘의 퀘스트</h2>
+    <div id="quests"></div>
+    <div class="points">총 포인트: <span id="points">0</span>p</div>
+    <div class="actions">
+      <button id="btn-scan">QR 스캔/확인</button>
+      <button id="btn-locate">현장 위치 인증</button>
+      <button id="btn-redeem" class="secondary">보상 쿠폰 생성</button>
+    </div>
+    <p class="hint">QR 예시: <code>?scan=bin</code>, <code>?scan=mask</code>, <code>?scan=craft</code>, <code>?scan=caps10</code></p>
+  </section>
+
+  <section id="tab-coupon" class="card hidden">
+    <h2>3) “할까?(Shall We?)” : 참여의 시스템화 — 쿠폰</h2>
+    <p>포인트 60p 이상이면 굿즈/체험 10% 할인 쿠폰이 생성됩니다.</p>
+    <div id="couponBox" class="coupon"></div>
+    <button id="btn-reset" class="danger">초기화(테스트)</button>
+  </section>
+</main>
+
+<footer><small>© 2025 Hahoe Guardians · PWA Demo</small></footer>
+<script src="app.js"></script>
+</body></html>
