@@ -1,9 +1,8 @@
+// 최신 버전 강제 로드용 (개발 단계 캐시 비활성화)
+self.addEventListener('install', e => self.skipWaiting());
+self.addEventListener('activate', e => e.waitUntil(clients.claim()));
 
-self.addEventListener('install', e=>{
-  e.waitUntil(caches.open('hahoe-v3').then(c=>c.addAll([
-    './','index.html','app.js','styles.css','manifest.json',
-  ])));
-});
-self.addEventListener('fetch', e=>{
-  e.respondWith(caches.match(e.request).then(r=> r || fetch(e.request)));
+// 모든 요청을 네트워크에서 새로 받아오도록 설정
+self.addEventListener('fetch', event => {
+  event.respondWith(fetch(event.request));
 });
