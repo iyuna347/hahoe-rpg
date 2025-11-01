@@ -1,10 +1,10 @@
 {
-  "name": "우리, 하회할까? (Hahoe Guardians)",
-  "short_name": "하회할까",
-  "start_url": ".",
+  "name": "우리, 하회할까?",
+  "short_name": "하회 수호단",
+  "start_url": "/",
   "display": "standalone",
   "background_color": "#0b1220",
-  "theme_color": "#0f172a",
+  "theme_color": "#0b1220",
   "icons": [
     {
       "src": "assets/icons/icon-192.png",

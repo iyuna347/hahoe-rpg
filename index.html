@@ -1,68 +1,84 @@
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>우리, 하회할까? | Hahoe Guardians</title>
+<!doctype html><html lang="ko"><head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>우리, 하회할까? · 하회 수호단 RPG</title>
 <link rel="manifest" href="manifest.json">
-<link rel="stylesheet" href="styles.css">
-<meta name="theme-color" content="#0f172a">
-</head>
-<body>
+<meta name="theme-color" content="#0b1220"/>
+<style>@font-face{font-family:'Gungseo';src:local('궁서'), local('Gungsuh');}
+:root{--bg:#0b1220;--card:#121a2b;--txt:#e5e7eb;--muted:#9ca3af;--acc:#22c55e;--line:#263246}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--txt);font-family:system-ui,-apple-system,Segoe UI,Roboto,Apple SD Gothic Neo,Noto Sans KR,Helvetica,Arial,sans-serif;line-height:1.6}
+header{padding:38px 18px 12px;text-align:center;position:relative}
+h1{font-family:'Gungseo',serif;font-size:40px;margin:0 0 8px}
+h2{font-family:'Gungseo',serif;font-size:28px;margin:0 0 10px}
+.lead{color:var(--muted)}
+.nav{display:flex;gap:10px;justify-content:center;margin:18px 0}
+.tab{background:#0f172a;border:1px solid #2b364a;color:#cbd5e1;padding:8px 14px;border-radius:999px;cursor:pointer}
+.tab.active{background:#1f2937;border-color:#374151}
+.container{max-width:980px;margin:0 auto;padding:0 16px 80px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px;margin:18px 0;box-shadow:0 6px 24px rgba(0,0,0,.25)}
+.intro{position:relative;overflow:hidden}
+.intro:after{content:"";position:absolute;left:-10px;right:-10px;bottom:0;height:140px;background:url('assets/ornaments/river.svg') bottom/cover no-repeat;opacity:.45;border-radius:16px}
+.ornaments{position:relative;height:0}
+.orn-mask{position:absolute;right:12px;top:-28px;width:64px;height:64px;opacity:.45;filter:drop-shadow(0 2px 6px rgba(0,0,0,.4))}
+.hint{display:block;color:#93c5fd}
+.intro-actions{display:flex;gap:10px;margin-top:12px;flex-wrap:wrap}
+button{border:0;border-radius:10px;padding:10px 14px;cursor:pointer}
+.primary{background:var(--acc);color:#062b18;font-weight:700}
+.secondary{background:#0b1220;border:1px solid #2b364a;color:#cbd5e1}
+.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+@media (max-width:760px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.char{background:#0f172a;border:1px solid #334155;border-radius:12px;padding:8px;text-align:center}
+.char img{width:100%;aspect-ratio:1/1;object-fit:contain;border-radius:10px;background:#0b1220}
+.char strong{display:block;margin-top:6px}
+.list{display:grid;gap:10px}.item{display:flex;gap:10px;align-items:center;background:#0f172a;border:1px solid #334155;border-radius:12px;padding:10px}
+.badge{background:#1f2937;padding:2px 8px;border-radius:999px;font-size:12px;color:#cbd5e1}
+.progress{height:10px;background:#0b1220;border:1px solid #334155;border-radius:999px;overflow:hidden}
+.progress>span{display:block;height:100%;background:linear-gradient(90deg,#22c55e,#06b6d4)}
+footer{color:#64748b;text-align:center;padding:18px}
+</style>
+</head><body>
 <header>
   <h1>우리, 하회할까?</h1>
-  <p class="subtitle">전통·환경·참여의 새로운 공존, 하회 수호단 RPG 🌿</p>
+  <div class="lead">전통·환경·참여의 새로운 공존, 하회 수호단 RPG 🌿</div>
+  <div class="nav">
+    <button class="tab active" data-tab="intro">스토리</button>
+    <button class="tab" data-tab="select">캐릭터</button>
+    <button class="tab" data-tab="quests">퀘스트</button>
+    <button class="tab" data-tab="coupon">쿠폰</button>
+  </div>
+  <div class="ornaments"><img src="assets/ornaments/mask.svg" class="orn-mask" alt="mask"/></div>
 </header>
 
-<nav class="tabs">
-  <button class="tab active" data-tab="intro">스토리</button>
-  <button class="tab" data-tab="select">캐릭터</button>
-  <button class="tab" data-tab="quests">퀘스트</button>
-  <button class="tab" data-tab="coupon">쿠폰</button>
-</nav>
-
-<main id="app">
-  <section id="tab-intro" class="card">
+<div class="container">
+  <section id="tab-intro" class="card intro">
     <h2>스토리라인</h2>
-    <p>옛날 하회의 수호신 <strong>농경신(토지신)</strong>은 풍요와 생명을 관장했습니다.
-    그러나 무분별한 쓰레기와 오염으로 <strong>낙동강</strong>이 병들자 분노하였습니다.
-    당신은 <strong>하회 수호단</strong>이 되어 환경 정화와 전통 복원 퀘스트를 수행하고,
-    사라진 탈의 조각을 모아 하회의 풍요를 되찾아야 합니다.</p>
-    <div class="meter"><div id="anger" class="bar" style="width:100%"></div></div>
+    <p>옛날 하회의 수호신 <b>농경신(토지신)</b>은 풍요와 생명을 관장했습니다. 그러나 무분별한 쓰레기와 오염으로 <b>낙동강</b>이 병들자 분노하였습니다. 당신은 <b>하회 수호단</b>이 되어 환경 정화와 전통 복원 퀘스트를 수행하고, 사라진 탈의 조각을 모아 하회의 풍요를 되찾아야 합니다.</p>
+    <div class="progress" aria-label="분노 게이지"><span style="width:20%"></span></div>
     <small class="hint">* 퀘스트를 완료하면 농경신의 분노(게이지)가 가라앉습니다.</small>
-  </section>
-
-  <section id="tab-select" class="card hidden">
-    <h2>1) “우리(We)” : 관계의 재정의 — 하회 수호단 캐릭터 선택</h2>
-    <p class="muted">입장 QR → 설치 없이 웹 접속 → 캐릭터 선택 후 오늘의 미션 시작</p>
-    <div class="grid chars">
-      <button class="char" data-char="양반"><img src="assets/characters/yangban.png"><strong>양반</strong><span>문화해설 +10</span></button>
-      <button class="char" data-char="연이낭자"><img src="assets/characters/yeon.png"><strong>연이낭자</strong><span>협동 보너스 +10</span></button>
-      <button class="char" data-char="또기"><img src="assets/characters/ttogi.png"><strong>또기</strong><span>정화력 +10</span></button>
-      <button class="char" data-char="어진할배"><img src="assets/characters/eojin.png"><strong>어진할배</strong><span>지혜 +10</span></button>
+    <div class="intro-actions">
+      <button id="btn-start" class="primary">시작하기</button>
+      <button class="secondary" data-goto="select">캐릭터 선택</button>
     </div>
-    <p class="hint">* 캐릭터 이미지는 데모용. 실제 운영 시 공식 가이드에 맞춰 교체.</p>
   </section>
 
-  <section id="tab-quests" class="card hidden">
-    <h2>2) “하회(Hahoe)” : 경험의 재구성 — 오늘의 퀘스트</h2>
-    <div id="quests"></div>
-    <div class="points">총 포인트: <span id="points">0</span>p</div>
-    <div class="actions">
-      <button id="btn-scan">QR 스캔/확인</button>
-      <button id="btn-locate">현장 위치 인증</button>
-      <button id="btn-redeem" class="secondary">보상 쿠폰 생성</button>
-    </div>
-    <p class="hint">QR 예시: <code>?scan=bin</code>, <code>?scan=mask</code>, <code>?scan=craft</code>, <code>?scan=caps10</code></p>
+  <section id="tab-select" class="card" hidden>
+    <h2>하회 수호단 캐릭터</h2>
+    <div class="grid" id="char-grid"></div>
   </section>
 
-  <section id="tab-coupon" class="card hidden">
-    <h2>3) “할까?(Shall We?)” : 참여의 시스템화 — 쿠폰</h2>
-    <p>포인트 60p 이상이면 굿즈/체험 10% 할인 쿠폰이 생성됩니다.</p>
-    <div id="couponBox" class="coupon"></div>
-    <button id="btn-reset" class="danger">초기화(테스트)</button>
+  <section id="tab-quests" class="card" hidden>
+    <h2>환경·전통 복원 퀘스트</h2>
+    <div class="list" id="quest-list"></div>
   </section>
-</main>
 
-<footer><small>© 2025 Hahoe Guardians · PWA Demo</small></footer>
+  <section id="tab-coupon" class="card" hidden>
+    <h2>쿠폰</h2>
+    <p class="hint">포인트를 모아 굿즈/체험 할인권을 받으세요.</p>
+    <div id="coupon-area"></div>
+  </section>
+</div>
+
+<footer>© 2025 Hahoe Guardians · PWA Demo</footer>
+
 <script src="app.js"></script>
 </body></html>
