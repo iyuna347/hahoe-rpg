@@ -206,4 +206,18 @@ body {
   transform: scale(1.15);       /* 1.1~1.2 사이에서 조절 가능 */
   transform-origin: center center;
 }
+/* 상단 처마 장식이 있다면 */
+.hanok-eaves {
+  position: fixed;          /* 또는 absolute */
+  top: 0; left: 0; right: 0;
+  z-index: 1;               /* 글자보다 뒤로 */
+  opacity: .18;             /* 더 연하게 */
+  pointer-events: none;     /* 클릭 방해 X */
+}
+
+/* 메인 헤더/타이틀은 위로 */
+.header, .hero, h1, .site-title {
+  position: relative;
+  z-index: 5;
+}
 
