@@ -242,5 +242,79 @@ body {
 body{
   padding-top: 120px;    /* 위에서 설정한 .hanok-eaves 높이보다 조금 크게 */
 }
+/* (1) 상단 처마는 '연하게' 1번만 */
+.hanok-eaves{
+  position:fixed; top:0; left:0; right:0;
+  width:100%; height:auto;
+  z-index:1; opacity:.18;
+  pointer-events:none;
+}
+
+/* (2) 혹시 다른 곳에서 배경/의사요소로 또 넣었으면 끄기 */
+.hero::before,
+.header::before,
+.site-title::before {
+  content:none !important;
+  background:none !important;
+}
+
+/* (3) 타이틀은 처마보다 위로 */
+.hero, #siteTitle {
+  position:relative; z-index:5;
+}
+
+/* (4) 타이틀이 처마랑 겹치지 않게 위쪽 여백 */
+.hero { padding-top: 80px; }
+/* 캐릭터 카드 이미지를 동일 박스 크기로 */
+.characters .card img{
+  width: 180px;            /* 박스 크기 통일 */
+  height: 180px;
+  object-fit: contain;     /* 원본 비율 유지 */
+  display:block;
+  margin: 0 auto;
+}
+
+/* 카드 자체 간격/레이아웃 보정(선택) */
+.characters {
+  display:grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 18px;
+}
+/* 모바일 가로 스크롤 + 스냅 */
+.coupon-strip{
+  display:flex;
+  gap:16px;
+  overflow-x:auto;
+  scroll-snap-type:x mandatory;
+  -webkit-overflow-scrolling: touch;
+  padding: 12px 10px;
+  border-radius: 16px;
+  background: rgba(255,255,255,.7);
+  border: 1px solid #d6c6a8;
+}
+
+.coupon-item{
+  flex:0 0 auto;
+  width: 72vw;             /* 화면 너비의 72% */
+  max-width: 360px;        /* 태블릿 대비 */
+  scroll-snap-align: center;
+  text-align:center;
+}
+
+.coupon-item img{
+  width:100%; height: 48vw;      /* 화면 비율에 맞춤 */
+  max-height: 240px;
+  object-fit: cover;
+  border-radius:14px;
+  border:3px solid #d8c49a;
+  box-shadow:0 4px 10px rgba(0,0,0,.18);
+}
+
+.coupon-item figcaption{
+  margin-top:8px;
+  font-family:'Gungsuh',serif;
+  color:#4b2c20;
+  font-size:18px;
+}
 
 
