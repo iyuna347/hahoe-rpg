@@ -121,3 +121,117 @@ document.addEventListener('DOMContentLoaded', () => {
   show('story');
 });
 
+/* ========= 진행상태 & 유틸 ========= */
+const QUEST_KEYS = ["recycle","photo","ox","keyring","happy"];
+let progress = JSON.parse(localStorage.getItem("hahoe-progress") || "{}");
+QUEST_KEYS.forEach(k => { if(typeof progress[k] !== "boolean") progress[k] = false; });
+
+const $ = sel => document.querySelector(sel);
+const $$ = sel => document.querySelectorAll(sel);
+
+function showPanel(id){
+  $$('.panel').forEach(p=>p.classList.add('hidden'));
+  $('#'+id).classList.remove('hidden');
+  window.scrollTo({top:0, behavior:"smooth"});
+}
+
+function saveProgress(){
+  localStorage.setItem("hahoe-progress", JSON.stringify(progress));
+}
+
+/* 0/5 텍스트 & 배지 업데이트 */
+function updateProgressUI(){
+  const done = QUEST_KEYS.filter(k=>progress[k]).length;
+  const t = $("#qProgress");
+  if (t) t.textContent = `진행 현황: ${done}/5 완료`;
+
+  QUEST_KEYS.forEach(k=>{
+    const b = document.getElementById(`badge-${k}`);
+    if (!b) return;
+    b.textContent = progress[k] ? "완료" : "진행중";
+    b.classList.toggle("done", !!progress[k]);
+  });
+
+  // 5개 모두 완료되면 쿠폰 자동 이동
+  if (done === QUEST_KEYS.length){
+    showPanel("coupons");
+  }
+}
+updateProgressUI();
+
+/* ========= 퀘스트 리스트 클릭 → 디테일 ========= */
+$$('#quests .qitem').forEach(card=>{
+  card.addEventListener('click', ()=>{
+    const target = card.getAttribute('data-go');   // q-recycle, q-photo, q-ox, ...
+    if (target) showPanel(target);
+  });
+});
+
+/* ========= 파일 인증 공통 ========= */
+function setupFileQuest(inputSel, doneBtnSel, key, previewSel){
+  const input = $(inputSel);
+  const doneBtn = $(doneBtnSel);
+  const preview = previewSel ? $(previewSel) : null;
+
+  if (!input || !doneBtn) return;
+
+  input.addEventListener('change', ()=>{
+    const file = input.files && input.files[0];
+    if (!file) return;
+    // 미리보기(선택)
+    if (preview){
+      const url = URL.createObjectURL(file);
+      preview.src = url;
+      preview.style.display = 'block';
+    }
+    doneBtn.disabled = false;
+  });
+
+  doneBtn.addEventListener('click', ()=>{
+    progress[key] = true;
+    saveProgress();
+    updateProgressUI();
+    showPanel('quests'); // 완료 후 목록으로 복귀
+  });
+}
+
+/* 각 퀘스트 세팅 */
+setupFileQuest('#recycleInput', '#btnRecycleDone', 'recycle', '#recyclePrev');
+setupFileQuest('#photoInput',   '#btnPhotoDone',   'photo',   '#photoPrev');
+setupFileQuest('#keyringInput', '#btnKeyDone',     'keyring', '#keyPrev');
+setupFileQuest('#happyInput',   '#btnHappyDone',   'happy',   '#happyPrev');
+
+/* ========= OX 퀘스트 ========= */
+const oxBtns = $$('#q-ox .ox .btn');
+const oxResult = $('#oxResult');
+const oxDone = $('#btnOxDone');
+let oxChoice = null;
+
+// 정답 예시: O (필요시 문구 바꿔줘)
+const OX_CORRECT = 'O';
+
+oxBtns.forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    oxChoice = btn.dataset.ox;  // 'O' or 'X'
+    oxBtns.forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    if (oxChoice === OX_CORRECT){
+      oxResult.textContent = "정답! 만송정의 뿌리는 모래를 단단히 잡아 환경에 도움을 줍니다.";
+    }else{
+      oxResult.textContent = "아쉬워요! 정답은 O입니다. 만송정의 뿌리는 생태에 큰 역할을 해요.";
+    }
+    oxDone.disabled = false;
+  });
+});
+
+oxDone.addEventListener('click', ()=>{
+  if (!oxChoice) return;
+  progress.ox = true;
+  saveProgress();
+  updateProgressUI();
+  showPanel('quests');
+});
+
+/* OX 선택 강조 */
+.ox .btn.active{ background:#caa57b; color:#fff; border-color:#b88a5d; }
+
