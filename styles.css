@@ -220,4 +220,27 @@ body {
   position: relative;
   z-index: 5;
 }
+/* === 상단 처마 장식: 글자 뒤로 보내고 더 연하게 === */
+.hanok-eaves{
+  position: fixed;       /* 화면 상단 고정 */
+  top: 0; left: 0; right: 0;
+  width: 100%;
+  height: 110px;         /* 처마 높이(이미지 비율에 맞춰 90~140px 조정 가능) */
+  object-fit: cover;
+  z-index: 1;            /* 글자보다 뒤 */
+  opacity: .18;          /* 더 연하게 */
+  pointer-events: none;  /* 클릭 방해 X */
+}
+
+/* 타이틀/헤더는 앞쪽 레이어로 */
+.hero, #siteTitle, .subtitle{
+  position: relative;
+  z-index: 5;
+}
+
+/* 상단이 겹치지 않도록 전체에 위 패딩(처마 높이만큼) */
+body{
+  padding-top: 120px;    /* 위에서 설정한 .hanok-eaves 높이보다 조금 크게 */
+}
+
 
