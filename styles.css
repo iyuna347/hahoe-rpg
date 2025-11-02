@@ -317,3 +317,13 @@ body{ background: var(--bg); color:var(--ink); }
 #quests .quests::-webkit-scrollbar {
   display: none;
 }
+#quests .quests{
+  display:flex; overflow-x:auto; -webkit-overflow-scrolling:touch;
+  gap:16px; padding:12px 8px; scroll-snap-type:x mandatory;
+}
+#quests .qitem{
+  flex:0 0 78vw; max-width:340px; scroll-snap-align:center;
+  background:#fff; border:1px solid #d6c6a8; border-radius:16px;
+  box-shadow:0 4px 12px rgba(0,0,0,.08); padding:18px 14px; text-align:center;
+}
+#quests .quests::-webkit-scrollbar{ display:none; }
