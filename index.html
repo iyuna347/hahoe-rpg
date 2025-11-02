@@ -56,17 +56,21 @@
       </div>
     </section>
 
-    <!-- 퀘스트 허브 -->
-    <section id="quests" class="panel hidden">
-      <h2>퀘스트 선택</h2>
-      <div class="quests">
-        <div class="qitem" data-go="q-recycle"><h4>① 분리수거 퀘스트</h4><p>스마트 분리수거존 인증</p></div>
-        <div class="qitem" data-go="q-photo"><h4>② 포토존 퀘스트</h4><p>정화 후 인증샷 업로드</p></div>
-        <div class="qitem" data-go="q-ox"><h4>③ 만송정 O·X</h4><p>버튼으로 퀴즈 응답</p></div>
-        <div class="qitem" data-go="q-keyring"><h4>④ 업사이클링 키링</h4><p>제작 인증 업로드</p></div>
-        <div class="qitem" data-go="q-happy"><h4>⑤ 나의 행복 사진</h4><p>행복했던 순간 공유</p></div>
-      </div>
-    </section>
+   <!-- 퀘스트 허브 -->
+<section id="quests" class="panel hidden">
+  <h2>퀘스트 선택</h2>
+
+  <!-- ✅ 진행 현황 줄 추가 -->
+  <p id="qProgress" class="note">진행 현황: 0/5 완료</p>
+
+  <div class="quests">
+    <div class="qitem" data-go="q-recycle" data-key="recycle"><h4>① 분리수거 퀘스트</h4><p>스마트 분리수거존 인증</p></div>
+    <div class="qitem" data-go="q-photo"   data-key="photo"><h4>② 포토존 퀘스트</h4><p>정화 후 인증샷 업로드</p></div>
+    <div class="qitem" data-go="q-ox"      data-key="ox"><h4>③ 만송정 O·X</h4><p>버튼으로 퀴즈 응답</p></div>
+    <div class="qitem" data-go="q-keyring" data-key="keyring"><h4>④ 업사이클링 키링</h4><p>제작 인증 업로드</p></div>
+    <div class="qitem" data-go="q-happy"   data-key="happy"><h4>⑤ 나의 행복 사진</h4><p>행복한 순간 공유</p></div>
+  </div>
+</section>
 
     <!-- ① 분리수거 -->
     <section id="q-recycle" class="panel hidden">
