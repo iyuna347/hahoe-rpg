@@ -1,324 +1,133 @@
-@@ -1,219 +1,72 @@
-/* ===== Base ===== */
+/* =========================
+   HAHOE THEME – HANOK DEEP-BROWN
+   (replace entire styles.css)
+   ========================= */
+
+/* 0) Font: 궁서 우선 */
 @font-face{font-family:"GungsuhLocal";src:local("궁서"),local("Gungsuh");}
 
+/* 1) Theme Tokens */
 :root{
-  --ink:#2b2a28;
-  --paper:#f7f3e9;
-  --paper-ink:#5a4a3f;
+  --ink:#2c1e12;         /* 본문 글자 */
+  --bg:#f7f1e7;          /* 전체 배경(한지톤) */
+  --panel:#fbf7f0;       /* 카드/패널 배경 */
+  --line:#e6dccb;        /* 테두리 */
+  --shadow:0 8px 24px rgba(0,0,0,.06);
+
+  --brand:#4a3425;       /* 상단 바(딥브라운) */
+  --brand-ink:#f2e9dc;   /* 상단 바 글자 */
+
+  --pill:#7c5b40;        /* 버튼 바탕 */
+  --pill-ink:#f6efe6;    /* 버튼 글자 */
+
+  --ok:#c0a27f;          /* 완료/포인트 컬러 */
 }
 
+/* 2) Base */
 *{box-sizing:border-box}
 html,body{height:100%}
-
 body{
   margin:0;
-  padding-top:64px; /* 상단 얇은 처마와 겹침 방지 */
+  color:var(--ink);
   font-family:"GungsuhLocal","Gungsuh","Batang",serif;
-  color:#2b1e0f;
   background:
-    linear-gradient(rgba(255,255,255,.85),rgba(255,255,255,.85)),
+    linear-gradient(rgba(255,255,255,.86),rgba(255,255,255,.86)),
     url("./assets/textures/hanji.jpg") center/cover fixed no-repeat;
 }
 
-/* ===== Hero (제목은 고정 아님) ===== */
-.hero{position:relative; z-index:5; text-align:center; max-width:980px; margin:0 auto 18px;}
-#siteTitle{margin:0; font-weight:800; color:#3b2a1a; font-size:clamp(28px,7vw,56px); line-height:1.15;}
-.subtitle{margin:.35rem 0 0; color:#5b4631; font-size:clamp(14px,3.4vw,22px);}
+/* (선택) 혹시 남아있는 처마 이미지가 있다면 보이지 않게 */
+.hanok-eaves{ display:none !important; }
 
+/* 공통 유틸 */
+.hidden{display:none}
+.center{text-align:center}
+.note{color:#7a6a58;font-size:14px}
+
+/* 3) HERO (상단 제목 영역: 처마 대신 딥브라운 바) */
+.hero{
+  background:
+    radial-gradient(circle at 50% -30px, rgba(255,255,255,.12) 0 6px, transparent 7px) repeat-x 0 8px/32px 22px,
+    linear-gradient(var(--brand), #3e2b1e);
+  color:var(--brand-ink);
+  border-bottom: 4px solid rgba(255,255,255,.08);
+  padding: 56px 16px 20px;
+  text-align:center;
+}
+#siteTitle{
+  margin:0;
+  font-weight:900;
+  color:var(--brand-ink);
+  font-size:clamp(28px,7vw,56px);
+  line-height:1.15;
+  text-shadow: 0 1px 0 rgba(0,0,0,.35);
+}
+.subtitle{
+  margin:.35rem 0 0;
+  color:rgba(255,255,255,.88);
+  font-size:clamp(14px,3.4vw,22px);
+}
+
+/* 4) Layout */
 .container{max-width:980px; margin:0 auto; padding:0 16px;}
 .panel{
-  background:var(--paper);
-  border:1px solid rgba(0,0,0,.08);
-  box-shadow:0 10px 22px rgba(0,0,0,.06);
-  border-radius:14px; padding:20px; margin:14px 0;
+  background:var(--panel);
+  border:1px solid var(--line);
+  box-shadow:var(--shadow);
+  border-radius:16px;
+  padding:20px;
+  margin:14px 0;
 }
-.tabbar{display:flex;gap:10px;justify-content:center;margin:10px 0 18px}
-.btn{background:#fff3e0;border:1px solid #caa57b;color:#4a3727;border-radius:999px;padding:10px 18px;cursor:pointer;font-family:"GungsuhLocal","Gungsuh","Batang",serif;}
-.btn.primary{background:#caa57b;color:#23190f}
-.btn:disabled{opacity:.45;cursor:not-allowed}
-.hidden{display:none}.center{text-align:center}.note{color:#7a6a58;font-size:14px}
 
-/* ===== Characters (모바일 2열, 데스크톱 4열) ===== */
+/* 5) Buttons */
+.btn{
+  background:var(--pill);
+  color:var(--pill-ink);
+  border:none;
+  border-radius:999px;
+  padding:12px 18px;
+  cursor:pointer;
+  font-family:"GungsuhLocal","Gungsuh","Batang",serif;
+  box-shadow: 0 2px 0 rgba(0,0,0,.18) inset, 0 4px 10px rgba(0,0,0,.12);
+}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+
+/* 6) Characters (모바일 2열, 데스크톱 4열) */
 .characters{
-  display:grid; grid-template-columns:repeat(2,minmax(0,1fr));
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
   gap:12px;
 }
 .card{
-  background:#f6f0e2; border:1px solid #e7d9c0; border-radius:14px;
-  padding:12px 12px 8px; text-align:center; overflow:hidden;
+  background:#f6f0e2;
+  border:1px solid #e7d9c0;
+  border-radius:14px;
+  padding:12px 12px 8px;
+  text-align:center;
+  overflow:hidden;
   display:flex; flex-direction:column; align-items:center;
+  transition:.15s ease; cursor:pointer;
+  box-shadow:0 6px 16px rgba(0,0,0,.05);
 }
-.card .name{
-  margin-top:8px; color:#3b2a1a; font-size:clamp(16px,3.8vw,20px);
-  font-family:"GungsuhLocal","Gungsuh","Batang",serif;
-}
-/* 이미지는 박스 안에서만 보이도록, 비율 유지 */
+.card:hover{transform:translateY(-2px)}
+.card.selected{outline:3px solid #b67b32}
 .card img{
   display:block; margin:6px auto 10px;
   object-fit:contain; max-width:88%;
   max-height:clamp(140px,34vw,220px);
 }
-/* 양반만 상대적으로 작았던 것 보정 */
-.card[data-char="yangban"] img{ transform:scale(1.10); transform-origin:center; }
-
+.card .name{
+  margin-top:8px; color:#3b2a1a;
+  font-size:clamp(16px,3.8vw,20px);
+}
+.card[data-char="yangban"] img{
+  transform:scale(1.10); transform-origin:center; /* 양반만 살짝 키움 */
+}
 @media (min-width:768px){
   .characters{ grid-template-columns:repeat(4,minmax(0,1fr)); gap:14px; }
   .card img{ max-height:210px; max-width:90%; }
 }
 
-/* ===== Quests ===== */
-.quests{display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px;}
-.qitem{padding:14px; border:1px dashed #caa57b; border-radius:12px; background:#fff;}
-.qitem h4{margin:6px 0 0}
-
-/* ===== OX ===== */
-.ox{display:flex; gap:10px; justify-content:center; margin:10px 0}
-.ox .btn{min-width:120px; font-size:22px}
-
-/* ===== Coupons: 모바일 가로 스크롤 + 스냅 ===== */
-.coupon-strip{
-  display:flex; gap:16px; overflow-x:auto; -webkit-overflow-scrolling:touch;
-  scroll-snap-type:x mandatory; padding:12px 10px;
-  border-radius:16px; background:rgba(255,255,255,.7); border:1px solid #d6c6a8;
-}
-.coupon-item{ flex:0 0 72vw; max-width:360px; text-align:center; scroll-snap-align:center; background:#fff; border:1px solid #e3d3b2; border-radius:14px; padding:10px; box-shadow:0 4px 10px rgba(0,0,0,.08); }
-.coupon-item img{ width:100%; height:48vw; max-height:240px; object-fit:cover; border-radius:14px; border:3px solid #d8c49a; box-shadow:0 4px 10px rgba(0,0,0,.18); }
-.coupon-item figcaption{ margin-top:8px; color:#4b2c20; font-size:18px; font-family:"GungsuhLocal","Gungsuh","Batang",serif; }
-@media (min-width:768px){
-  .coupon-item{ flex:0 0 220px; max-width:220px; }
-  .coupon-item img{ height:190px; max-height:190px; }
-}
-/* === [EAVES + TITLE TUNE-UP] =========================== */
-/* 처마: 살짝 더 진하고 약간 더 높게 */
-.hanok-eaves{
-  height: 72px;                         /* 기존 48px → 72px */
-  opacity: .22;                         /* 기존 .08 → .22 (은은하지만 확실히 보이게) */
-  background: url("./assets/textures/hanok-eaves.png")
-              center top / cover no-repeat;
-  z-index: 1;                           /* 제목보다 뒤 */
-  filter: sepia(.2) saturate(.9) contrast(.95);
-}
-
-/* 제목 영역: 처마와 '겹쳐 보이게' 위로 올림 */
-.hero{
-  position: relative;
-  z-index: 5;                           /* 처마보다 위 */
-  padding-top: 56px;                    /* 처마 높이만큼 여백 */
-  margin-top: -14px;                    /* 살짝 끌어올려 겹치는 느낌 */
-/* 퀘스트 카드 그리드: 모바일에서도 가로 두 칸 정렬 */
-.quests {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr)); /* 두 칸 */
-  gap: 14px;
-  justify-items: stretch;
-  align-items: stretch;
-  text-align: center;
-}
-
-/* 제목: 굵은 궁서체 + 살짝 가독 보정 */
-#siteTitle{
-  font-family:"GungsuhLocal","Gungsuh","Batang",serif;
-  font-weight: 900;
-  letter-spacing: .02em;
-  color:#2f2216;
-  text-shadow: 0 1px 0 rgba(255,255,255,.45); /* 처마 위에서도 선명하게 */
-/* 개별 퀘스트 카드 디자인 */
-.qitem {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background: #fffdf7;
-  border: 1px solid #d9c7a1;
-  border-radius: 14px;
-  padding: 10px 14px;
-  box-shadow: 0 3px 6px rgba(0,0,0,0.08);
-  cursor: pointer;
-  transition: transform 0.15s ease;
-}
-
-/* 모바일에서 살짝 더 진하게/낮게 조정 */
-@media (max-width: 768px){
-  .hanok-eaves{ height: 64px; opacity: .26; }
-  .hero{ padding-top: 52px; margin-top: -10px; }
-.qitem:hover {
-  transform: translateY(-2px);
-}
-/* ===== Theme: 한옥 딥브라운 ===== */
-:root{
-  --ink:#2c1e12;         /* 본문 글자 */
-  --bg:#f7f1e7;          /* 배경 종이톤 */
-  --panel:#fbf7f0;       /* 패널 종이톤 */
-  --brand:#4a3425;       /* 헤더 진갈색 */
-  --brand-ink:#f2e9dc;   /* 헤더 글자 */
-  --pill:#7c5b40;        /* 탭 배경 */
-  --pill-ink:#f6efe6;    /* 탭 글자 */
-  --line:#e6dccb;        /* 카드 테두리 */
-  --ok:#c0a27f;          /* 완료 배지 */
-}
-
-/* 배경 */
-body{ background: var(--bg); color:var(--ink); }
-
-/* 헤더(히어로) – 딥브라운 바 + 은은한 점 장식 */
-.hero{
-  background:
-    radial-gradient(circle at 50% -30px, rgba(255,255,255,.12) 0 6px, transparent 7px) repeat-x 0 8px/32px 22px,
-    linear-gradient(#4a3425,#3e2b1e);
-  color:var(--brand-ink);
-  border-bottom: 4px solid rgba(255,255,255,.08);
-  padding: 64px 16px 20px;
-  text-align:center;
-.q-left {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  text-align: left;
-}
-#siteTitle{ color:var(--brand-ink); font-weight:900; }
-.subtitle{ color:rgba(255,255,255,.85); }
-
-/* 상단 탭(스토리/캐릭터/퀘스트/쿠폰) → 알약형 */
-.tabbar{ gap:12px; margin:16px 0 10px; }
-.tabbar button{
-  background: var(--pill);
-  color: var(--pill-ink);
-  border: none;
-  padding: 12px 18px;
-  border-radius: 999px;
-  box-shadow: 0 2px 0 rgba(0,0,0,.18) inset, 0 4px 10px rgba(0,0,0,.12);
-}
-.tabbar button.active{ filter: brightness(1.08) saturate(1.05); }
-/* 패널(종이카드) */
-.panel{
-  background: var(--panel);
-  border: 1px solid var(--line);
-  box-shadow: 0 8px 24px rgba(0,0,0,.06);
-  border-radius: 16px;
-.qi {
-  font-size: 22px;
-  flex-shrink: 0;
-}
-
-/* 퀘스트 리스트 카드 */
-#quests .qitem{
-  display:flex; align-items:center; justify-content:space-between;
-  gap:12px;
-  background:#fff;
-  border:1px solid var(--line);
-  border-radius: 16px;
-  padding: 16px 14px;
-  box-shadow: 0 6px 14px rgba(0,0,0,.05);
-.qtext h4 {
-  font-family: "GungsuhLocal","Gungsuh","Batang",serif;
-  font-size: 17px;
-  margin: 0;
-  color: #3b2a1a;
-}
-
-/* 왼쪽: 아이콘 + 텍스트 블록 */
-.q-left{ display:flex; align-items:center; gap:14px; }
-.qi{                           /* 아이콘 원형 배지 */
-  width:40px; height:40px; border-radius:50%;
-  background:#f4eadb; display:grid; place-items:center;
-  font-size:20px;
-.qtext p {
-  font-family: "GungsuhLocal","Gungsuh","Batang",serif;
-  font-size: 14px;
-  color: #6b5742;
-  margin: 3px 0 0;
-}
-.qtext h4{ margin:0 0 6px; font-size:20px; font-weight:800; color:#3d2a1c; }
-.qtext p{ margin:0; color:#6a5846; }
-
-/* 오른쪽: 완료 배지 */
-.badge{
-  min-width:88px; text-align:center;
-  background:#fff7ef; color:#6a5140;
-  border:2px solid var(--ok); border-radius:14px;
-  padding:8px 10px; font-weight:700;
-  box-shadow: 0 2px 0 rgba(0,0,0,.06) inset;
-.badge {
-  font-family: "GungsuhLocal","Gungsuh","Batang",serif;
-  background: #f3e2c0;
-  border: 1px solid #caa57b;
-  border-radius: 10px;
-  padding: 4px 8px;
-  font-size: 13px;
-  color: #4b2c20;
-}
-.badge.done{ background: var(--ok); color:#fff; border-color:var(--ok); }
-
-/* 모바일 간격 */
-@media (max-width:560px){
-  #quests .qitem{ padding:14px 12px; }
-  .qtext h4{ font-size:18px; }
-/* 모바일에서 한 줄씩 정렬되도록 */
-@media (max-width: 480px) {
-  .quests {
-    grid-template-columns: 1fr; /* 한 줄씩 */
-  }
-}
-/* === 퀘스트 선택: 가로 스크롤 카드형 레이아웃 === */
-#quests .quests {
-  display: flex;                     /* 세로 → 가로 배치 */
-  overflow-x: auto;                  /* 가로 스크롤 가능 */
-  -webkit-overflow-scrolling: touch; /* 모바일 부드러운 스크롤 */
-  gap: 16px;                         /* 카드 사이 여백 */
-  padding: 12px 8px;
-  scroll-snap-type: x mandatory;     /* 스냅 효과 */
-}
-
-#quests .qitem {
-  flex: 0 0 78vw;                    /* 화면의 약 78% 너비 */
-  max-width: 340px;                  /* 데스크탑 상한 */
-  scroll-snap-align: center;
-  background: #fff;
-  border: 1px solid #d6c6a8;
-  border-radius: 16px;
-  box-shadow: 0 4px 12px rgba(0,0,0,.08);
-  padding: 18px 14px;
-  text-align: center;
-  transition: transform .2s ease;
-}
-
-#quests .qitem:hover {
-  transform: translateY(-4px);
-}
-
-#quests .qitem h4 {
-  margin: 6px 0;
-  font-size: 20px;
-  font-weight: 700;
-  color: #3b2a1a;
-}
-
-#quests .qitem p {
-  margin: 0;
-  font-size: 16px;
-  color: #6a5846;
-}
-
-/* 모바일에서는 더 꽉 차게 */
-@media (max-width: 560px) {
-  #quests .qitem { flex: 0 0 84vw; }
-}
-
-/* 스크롤바 감추기 (디자인 깔끔하게) */
-#quests .quests::-webkit-scrollbar {
-  display: none;
-}
-#quests .quests{
-  display:flex; overflow-x:auto; -webkit-overflow-scrolling:touch;
-  gap:16px; padding:12px 8px; scroll-snap-type:x mandatory;
-}
-#quests .qitem{
-  flex:0 0 78vw; max-width:340px; scroll-snap-align:center;
-  background:#fff; border:1px solid #d6c6a8; border-radius:16px;
-  box-shadow:0 4px 12px rgba(0,0,0,.08); padding:18px 14px; text-align:center;
-}
-#quests .quests::-webkit-scrollbar{ display:none; }
-/* === 퀘스트 가로 카드: 한 줄 + 가로 스냅 === */
+/* 7) Quests – 가로 한 줄 카드(이모지+텍스트+배지) */
 .quests-row{
   display:flex;
   gap:10px;
@@ -327,46 +136,79 @@ body{ background: var(--bg); color:var(--ink); }
   scroll-snap-type:x mandatory;
   padding: 6px 2px;
 }
+.quests-row::-webkit-scrollbar{ display:none; }
 
 .qcard{
   scroll-snap-align:center;
-  display:flex;
-  align-items:center;
-  gap:10px;
-  height:56px;                     /* 얇고 길게 */
-  padding: 0 12px;
-  background:#fbf7f0;              /* 한지 톤 */
-  border:1px solid #e6dccb;        /* 종이 느낌 테두리 */
+  display:flex; align-items:center; gap:10px;
+  height:56px;
+  padding:0 12px;
+  background:#fbf7f0;
+  border:1px solid var(--line);
   border-radius:14px;
-  box-shadow: 0 4px 12px rgba(0,0,0,.06);
-  white-space:nowrap;               /* 한 줄 */
-  overflow:hidden;                  /* 넘치면 숨김 */
+  box-shadow:0 4px 12px rgba(0,0,0,.06);
+  white-space:nowrap; overflow:hidden;
+  transition:transform .15s ease;
 }
+.qcard:hover{ transform:translateY(-2px); }
 
-.q-emoji{ font-size:18px; flex:0 0 auto; }
+.q-emoji{ font-size:18px; flex:0 0 auto; text-align:center; }
 .q-line{
-  font-family:"GungsuhLocal","Gungsuh","Batang",serif;
-  font-size:14px;                   /* 글씨 작게 */
+  flex:1 1 auto;
+  font-size:14px;
   color:#3b2a1a;
-  text-overflow:ellipsis;           /* 길면 … */
-  overflow:hidden;
-  flex: 1 1 auto;                   /* 남은 공간 차지 */
+  text-overflow:ellipsis; overflow:hidden;
 }
-
 .q-badge{
   flex:0 0 auto;
   font-size:12px;
   padding:6px 8px;
   background:#fff7ef;
   color:#6a5140;
-  border:1px solid #c0a27f;
+  border:1px solid var(--ok);
   border-radius:12px;
   font-weight:700;
 }
+.q-badge.done{ background:var(--ok); color:#fff; border-color:var(--ok); }
 
-/* 태블릿 이상에서는 살짝 크게 */
 @media (min-width:768px){
   .qcard{ height:60px; }
   .q-line{ font-size:15px; }
 }
-.badge.done{ background:#c0a27f; color:#fff; border-color:#c0a27f; }
+
+/* 8) 퀘스트 상세 공통 */
+input[type="file"]{
+  display:block; width:100%;
+  padding:10px; background:#fff;
+  border:1px solid #e7d9c0; border-radius:12px;
+}
+
+/* 9) OX */
+.ox{display:flex; gap:10px; justify-content:center; margin:10px 0}
+.ox .btn{min-width:120px; font-size:22px}
+
+/* 10) Coupons – 모바일 가로 스크롤 + 스냅 */
+.coupon-strip{
+  display:flex; gap:16px; overflow-x:auto; -webkit-overflow-scrolling:touch;
+  scroll-snap-type:x mandatory; padding:12px 10px;
+  border-radius:16px; background:rgba(255,255,255,.7); border:1px solid #d6c6a8;
+}
+.coupon-strip::-webkit-scrollbar{ display:none; }
+
+.coupon-item{
+  flex:0 0 72vw; max-width:360px; text-align:center; scroll-snap-align:center;
+  background:#fff; border:1px solid #e3d3b2; border-radius:14px; padding:10px;
+  box-shadow:0 4px 10px rgba(0,0,0,.08);
+}
+.coupon-item img{
+  width:100%; height:48vw; max-height:240px;
+  object-fit:cover; border-radius:14px;
+  border:3px solid #d8c49a; box-shadow:0 4px 10px rgba(0,0,0,.18);
+}
+.coupon-item figcaption{
+  margin-top:8px; color:#4b2c20; font-size:18px;
+}
+@media (min-width:768px){
+  .coupon-item{ flex:0 0 220px; max-width:220px; }
+  .coupon-item img{ height:190px; max-height:190px; }
+}
