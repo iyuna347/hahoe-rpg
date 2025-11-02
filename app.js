@@ -243,3 +243,88 @@ if (startBtn) {
     document.querySelector('#characters .card')?.scrollIntoView({behavior:'smooth', block:'start'});
   });
 }
+/* ========= 공통 도우미 ========= */
+function showPanel(id){
+  document.querySelectorAll('main .panel').forEach(p => p.classList.add('hidden'));
+  document.getElementById(id)?.classList.remove('hidden');
+}
+function updateProgressUI(){
+  const p = JSON.parse(localStorage.getItem('hahoeProgress') || '{}');
+  const keys = ['recycle','photo','ox','keyring','happy'];
+  let done = keys.filter(k => p[k] === true).length;
+  const prog = document.getElementById('qProgress');
+  if (prog) prog.textContent = `진행 현황: ${done}/5 완료`;
+
+  // 배지 갱신
+  keys.forEach(k=>{
+    const badge = document.getElementById(`badge-${k}`);
+    if (!badge) return;
+    if (p[k]) { badge.textContent = '완료'; badge.classList.add('done'); }
+    else { badge.textContent = '대기'; badge.classList.remove('done'); }
+  });
+
+  if (done === 5) showPanel('coupons');
+}
+
+/* ========= 퀘스트 목록 → 상세 이동 ========= */
+document.querySelectorAll('.qcard').forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    const target = btn.dataset.go;      // q-recycle, q-photo...
+    if (target) showPanel(target);
+  });
+});
+
+/* ========= 뒤로가기(퀘스트 목록) ========= */
+document.querySelectorAll('[data-back]').forEach(b=>{
+  b.addEventListener('click', ()=> showPanel('quests'));
+});
+
+/* ========= 파일 업로드 → 완료 버튼 활성화 ========= */
+[
+  ['recycleInput','recycle'],
+  ['photoInput','photo'],
+  ['keyringInput','keyring'],
+  ['happyInput','happy'],
+].forEach(([inputId,key])=>{
+  const input = document.getElementById(inputId);
+  if (!input) return;
+  input.addEventListener('change', ()=>{
+    const btn = document.querySelector(`[data-done="${key}"]`);
+    if (btn) btn.disabled = !(input.files && input.files.length > 0);
+  });
+});
+
+/* ========= 완료 처리(저장 + UI 반영) ========= */
+document.querySelectorAll('[data-done]').forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    const key = btn.dataset.done; // recycle/photo/ox/keyring/happy
+    const p = JSON.parse(localStorage.getItem('hahoeProgress') || '{}');
+    p[key] = true;
+    localStorage.setItem('hahoeProgress', JSON.stringify(p));
+    updateProgressUI();
+    showPanel('quests'); // 완료 후 목록으로
+  });
+});
+
+/* ========= 만송정 OX ========= */
+const OX_CORRECT = 'O';
+document.querySelectorAll('[data-ox]').forEach(b=>{
+  b.addEventListener('click', ()=>{
+    const choice = b.dataset.ox;
+    const r = document.getElementById('oxResult');
+    const doneBtn = document.getElementById('btnOxDone');
+    if (choice === OX_CORRECT){
+      r.textContent = '정답입니다! ✅';
+      r.style.color = '#246b2b';
+      doneBtn.disabled = false;
+    } else {
+      r.textContent = '아쉬워요! 정답은 O 입니다. 🌲';
+      r.style.color = '#a14a2a';
+      doneBtn.disabled = false; // 정답/오답 모두 학습형으로 통과
+    }
+  });
+});
+
+/* ========= 초기 로드 ========= */
+document.addEventListener('DOMContentLoaded', updateProgressUI);
+
