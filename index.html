@@ -1,63 +1,137 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="utf-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>우리, 하회할까? · 하회 수호단 RPG</title>
-  <meta name="theme-color" content="#3a2a1a"/>
   <link rel="manifest" href="manifest.json">
-  <link rel="stylesheet" href="styles.css">
-  <script defer src="app.js"></script>
+  <link rel="stylesheet" href="styles.css?v=5">
 </head>
-<body class="hanok beige">
-  <header class="roof">
-    <div class="roof-tiles"></div>
-    <h1 class="title">우리, 하회할까?</h1>
-    <p class="subtitle">전통·환경·참여의 새로운 공존, 하회 수호단 RPG 🌿</p>
-
+<body class="bg">
+  <header class="wrap">
+    <h1>우리, 하회할까?</h1>
+    <p class="subtitle">전통·환경·참여의 새로운 공존, 하회 수호단 RPG</p>
     <nav class="tabs">
-      <button class="tab active" data-tab="intro">스토리</button>
-      <button class="tab" data-tab="select">캐릭터</button>
-      <button class="tab" data-tab="quests">퀘스트</button>
-      <button class="tab" data-tab="coupon">쿠폰</button>
+      <button class="tab active" data-tab="story">스토리</button>
+      <button class="tab" data-tab="character" disabled>캐릭터</button>
+      <button class="tab" data-tab="quest" disabled>퀘스트</button>
+      <button class="tab" data-tab="coupon" disabled>쿠폰</button>
     </nav>
   </header>
 
-  <main class="wrap">
-    <section id="tab-intro" class="paper card">
+  <!-- 스토리 -->
+  <main class="wrap tab-pane show" id="tab-story">
+    <section class="panel">
       <h2>스토리라인</h2>
       <p>
-        옛날 하회의 수호신 <b>농경신(토지신)</b>은 풍요와 생명을 관장했습니다.
-        그러나 무분별한 쓰레기와 오염으로 <b>낙동강</b>이 병들자 분노하였습니다.
-        당신은 <b>하회 수호단</b>이 되어 환경 정화와 전통 복원 퀘스트를 수행하고,
-        사라진 탈의 조각을 모아 하회의 풍요를 되찾아야 합니다.
+        옛날 하회의 수호신 <b>농경신(토지신)</b>은 풍요와 생명을 지켰습니다. 그러나 무분별한 쓰레기와 오염으로
+        <b>낙동강</b>과 대지가 병들자 신의 분노가 일었고, <b>11개의 하회탈</b>은 조각조각 흩어졌습니다.
+        당신은 <b>하회 수호단</b>이 되어 환경 정화와 전통 복원 퀘스트를 수행하고, 사라진 탈의 조각을 모아 하회의 풍요를 되찾아야 합니다.
       </p>
-      <div class="progress" aria-label="분노 게이지"><span style="width:18%"></span></div>
-      <small class="hint">* 퀘스트를 완료하면 농경신의 분노(게이지)가 가라앉습니다.</small>
       <div class="cta">
-        <button id="btn-start" class="btn primary">시작하기</button>
-        <button class="btn ghost" data-goto="select">캐릭터 선택</button>
+        <button id="btn-start" class="btn btn-primary">시작하기</button>
       </div>
-    </section>
-
-    <section id="tab-select" class="paper card" hidden>
-      <h2>하회 수호단 캐릭터</h2>
-      <p class="hint">원하는 캐릭터를 선택하세요.</p>
-      <div id="char-grid" class="grid"></div>
-    </section>
-
-    <section id="tab-quests" class="paper card" hidden>
-      <h2>환경·전통 복원 퀘스트</h2>
-      <div id="quest-list" class="list"></div>
-    </section>
-
-    <section id="tab-coupon" class="paper card" hidden>
-      <h2>쿠폰</h2>
-      <p class="hint">포인트를 모아 굿즈/체험 할인권을 받으세요.</p>
-      <div id="coupon-area"></div>
+      <small class="hint">* 시작하기 버튼을 눌러야 다음 단계로 이동할 수 있습니다.</small>
     </section>
   </main>
 
-  <footer class="foot">© 2025 Hahoe Guardians · PWA Demo</footer>
+  <!-- 캐릭터 선택 -->
+  <main class="wrap tab-pane" id="tab-character">
+    <section class="panel">
+      <h2>하회 수호단 선택</h2>
+      <p>원하는 캐릭터를 선택하세요. 선택하면 <b>다음</b> 버튼이 활성화됩니다.</p>
+
+      <div class="grid-4" id="char-grid">
+        <label class="card character">
+          <input type="radio" name="character" value="yangban" />
+          <img src="./yangban.png" alt="양반" />
+          <span class="name">양반</span>
+        </label>
+
+        <label class="card character">
+          <input type="radio" name="character" value="yeon" />
+          <img src="./yeon.png" alt="연이낭자" />
+          <span class="name">연이낭자</span>
+        </label>
+
+        <label class="card character">
+          <input type="radio" name="character" value="ttogi" />
+          <img src="./ttogi.png" alt="또기" />
+          <span class="name">또기</span>
+        </label>
+
+        <label class="card character">
+          <input type="radio" name="character" value="eojin" />
+          <img src="./eojin.png" alt="어진할배" />
+          <span class="name">어진할배</span>
+        </label>
+      </div>
+
+      <div class="cta">
+        <button id="btn-next-to-quest" class="btn" disabled>다음 → 퀘스트로</button>
+      </div>
+    </section>
+  </main>
+
+  <!-- 퀘스트 선택 -->
+  <main class="wrap tab-pane" id="tab-quest">
+    <section class="panel">
+      <h2>퀘스트 선택</h2>
+      <p>아래 5개 중 하나를 선택하세요. 선택 즉시 <b>인증 화면</b>으로 이동합니다.</p>
+
+      <div class="grid-2" id="quest-list">
+        <button class="card quest" data-quest="bin">분리수거 퀘스트</button>
+        <button class="card quest" data-quest="photo">포토존 정화 인증</button>
+        <button class="card quest" data-quest="quiz">만송정 OX 퀴즈</button>
+        <button class="card quest" data-quest="upcycle">업사이클링 키링 제작</button>
+        <button class="card quest" data-quest="local">로컬상생 미션(제휴상점 참여)</button>
+      </div>
+
+      <div class="progress">
+        <div>완료: <span id="done-count">0</span> / 5</div>
+      </div>
+    </section>
+  </main>
+
+  <!-- 인증 화면 -->
+  <main class="wrap tab-pane" id="tab-verify">
+    <section class="panel">
+      <h2 id="verify-title">인증</h2>
+      <p id="verify-desc" class="mb8"></p>
+
+      <div class="verify-box">
+        <video id="cam" autoplay playsinline></video>
+        <div class="verify-actions">
+          <button id="btn-open-camera" class="btn">카메라 켜기</button>
+          <button id="btn-shot" class="btn" disabled>촬영</button>
+          <input type="file" id="file-upload" accept="image/*" />
+        </div>
+        <canvas id="snap" class="hidden"></canvas>
+        <img id="preview" class="hidden" alt="인증 미리보기" />
+      </div>
+
+      <div class="cta">
+        <button id="btn-verify-complete" class="btn btn-primary" disabled>인증 완료</button>
+        <button id="btn-back-quest" class="btn">← 퀘스트로</button>
+      </div>
+    </section>
+  </main>
+
+  <!-- 쿠폰 -->
+  <main class="wrap tab-pane" id="tab-coupon">
+    <section class="panel">
+      <h2>보상 쿠폰</h2>
+      <p>모든 퀘스트를 완료했습니다! 아래 쿠폰을 현장에서 제시하세요.</p>
+      <ul class="coupon-list" id="coupon-list">
+        <li>굿즈 10% 할인권</li>
+        <li>업사이클링 체험 1,000원 할인</li>
+        <li>제휴 카페 음료 10% 할인</li>
+      </ul>
+    </section>
+  </main>
+
+  <footer class="wrap footer">© 2025 Hahoe Guardians • PWA Demo</footer>
+
+  <script src="app.js?v=5"></script>
 </body>
 </html>
