@@ -155,4 +155,49 @@ body {
     height: 46vw;
   }
 }
+/* ===== Coupon strip: 모바일 가로 스크롤 ===== */
+.coupon-strip{
+  display: flex;
+  gap: 16px;
+  overflow-x: auto;                 /* 옆으로 스크롤 */
+  padding: 12px;
+  scroll-snap-type: x mandatory;    /* 카드 한 장씩 착-착 스냅 */
+  -webkit-overflow-scrolling: touch;
+  background: rgba(255,255,255,.72);
+  border: 1px solid #d6c6a8;
+  border-radius: 16px;
+}
+
+.coupon-item{
+  flex: 0 0 72vw;                   /* 모바일 기본 너비 */
+  max-width: 220px;                 /* 데스크톱 상한 */
+  scroll-snap-align: center;
+  text-align: center;
+  background: #fff;
+  border: 1px solid #e3d3b2;
+  border-radius: 14px;
+  padding: 10px;
+  box-shadow: 0 4px 10px rgba(0,0,0,.08);
+}
+
+.coupon-item img{
+  width: 100%;
+  height: 48vw;                     /* 화면 비례 높이 */
+  max-height: 190px;                /* 데스크톱 상한 */
+  object-fit: cover;
+  border-radius: 10px;
+  display: block;
+}
+
+.coupon-item figcaption{
+  margin-top: 8px;
+  font-family: "Gungsuh","GungsuhLocal",serif;
+  color: #4b2c20;
+  font-size: 18px;
+}
+
+@media (min-width: 768px){
+  .coupon-item{ flex: 0 0 220px; }
+  .coupon-item img{ height: 190px; }
+}
 
