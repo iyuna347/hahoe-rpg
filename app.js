@@ -1,87 +1,172 @@
-document.addEventListener('DOMContentLoaded', () => {
-  const tabs = document.querySelectorAll('.tab');
-  const sections = document.querySelectorAll('section[id^="tab-"]');
-  function showTab(name){
-    tabs.forEach(b => b.classList.toggle('active', b.dataset.tab === name));
-    sections.forEach(s => s.hidden = s.id !== `tab-${name}`);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  }
-  tabs.forEach(btn => btn.addEventListener('click', () => showTab(btn.dataset.tab)));
-  document.querySelectorAll('[data-goto]').forEach(b => b.addEventListener('click', () => showTab(b.dataset.goto)));
-  const start = document.getElementById('btn-start');
-  if (start) start.addEventListener('click', () => showTab('select'));
+/* 상태 */
+const state = {
+  locked: true,            // 시작하기 누르기 전 탭 잠금
+  character: null,         // 선택 캐릭터
+  quests: {                // 5개 퀘스트 완료 상태
+    bin: false, photo: false, quiz: false, upcycle: false, local: false
+  },
+  currentQuest: null
+};
 
-  const state = {
-    points: 0,
-    char: null,
-    quests: [
-      {id:'Q1', icon:'♻️', title:'분리수거 퀘스트', desc:'스마트 쓰레기통 QR 스캔 후 올바르게 분리수거', points:20, key:'qr:bin'},
-      {id:'Q2', icon:'📸', title:'강변 정화 인증',   desc:'강변·숲길 오염 취약구역 정화 후 인증샷 업로드', points:20, key:'qr:clean'},
-      {id:'Q3', icon:'🌲', title:'만송정 OX 퀴즈',   desc:'소나무와 환경에 관한 OX 퀴즈 풀기', points:20, key:'qr:mask'},
-      {id:'Q4', icon:'🛠️', title:'업사이클링 공방', desc:'병뚜껑으로 키링/실링왁스 만들기', points:25, key:'qr:craft'},
-      {id:'Q5', icon:'🧃', title:'병뚜껑 10개 기부', desc:'집에서 모아온 병뚜껑 10개 제출', points:30, key:'qr:caps10'},
-    ]
-  };
+/* 유틸 */
+const $ = s => document.querySelector(s);
+const $$ = s => document.querySelectorAll(s);
 
-  const chars = [
-    {id:'yangban', name:'양반',     img:'assets/characters/yangban.png', perk:'문화해설 +10'},
-    {id:'yeon',    name:'연이낭자', img:'assets/characters/yeon.png',    perk:'생태감수성 +10'},
-    {id:'ttogi',   name:'또기',     img:'assets/characters/ttogi.png',   perk:'민첩 +10'},
-    {id:'eojin',   name:'어진할배', img:'assets/characters/eojin.png',   perk:'지식 +10'},
-  ];
+function setTab(name){
+  // 잠금: story 외 접근 불가
+  if(state.locked && name !== 'story') return;
+  $$('.tab').forEach(b=>b.classList.toggle('active', b.dataset.tab===name));
+  $$('.tab-pane').forEach(p=>p.classList.toggle('show', p.id===`tab-${name}`));
+}
 
-  const grid = document.getElementById('char-grid');
-  grid.innerHTML = chars.map(c => `
-    <button class="char" data-id="${c.id}">
-      <div class="char-img"><img src="${c.img}" alt="${c.name}"></div>
-      <div class="char-name">${c.name}</div>
-      <div class="badge">${c.perk}</div>
-    </button>
-  `).join('');
+function unlockTabs(){
+  state.locked = false;
+  // 캐릭터 탭만 우선 해제
+  $("[data-tab='character']").disabled = false;
+}
 
-  grid.querySelectorAll('.char').forEach(el => {
-    el.addEventListener('click', () => {
-      state.char = el.dataset.id;
-      alert(`${chars.find(c=>c.id===state.char).name} 선택! 퀘스트로 이동합니다.`);
-      showTab('quests');
-    });
-  });
+/* 초기 탭 */
+setTab('story');
 
-  const list = document.getElementById('quest-list');
-  list.innerHTML = state.quests.map(q => `
-    <div class="item">
-      <div class="badge">${q.icon}</div>
-      <div class="grow">
-        <div><b>${q.title}</b></div>
-        <div class="muted">${q.desc}</div>
-      </div>
-      <button class="btn ghost" data-key="${q.key}">완료</button>
-    </div>
-  `).join('');
-
-  function award(key){
-    const btn = [...document.querySelectorAll('[data-key]')].find(b => b.dataset.key.endsWith(key));
-    if (!btn || btn.disabled) return;
-    btn.disabled = true; btn.textContent = '완료됨';
-    const q = state.quests.find(x=>x.key === btn.dataset.key);
-    state.points += q.points;
-    updateCoupon();
-  }
-
-  const url = new URL(location.href);
-  const scan = url.searchParams.get('scan');
-  if (scan) award(scan);
-
-  document.querySelectorAll('[data-key]').forEach(b => {
-    b.addEventListener('click', () => award(b.dataset.key.split(':')[1]));
-  });
-
-  function updateCoupon(){
-    const el = document.getElementById('coupon-area');
-    const need = 60;
-    el.innerHTML = (state.points >= need)
-      ? `<div class="card paper"><b>하회 포인트: ${state.points}</b><p>쿠폰이 발급되었습니다. (굿즈/체험 10% 할인)</p></div>`
-      : `<div class="card paper"><b>하회 포인트: ${state.points}</b><p>${need - state.points}점 더 모으면 쿠폰 발급!</p></div>`;
-  }
-  updateCoupon();
+/* 탭 버튼 */
+$$('.tab').forEach(btn=>{
+  btn.addEventListener('click',()=>setTab(btn.dataset.tab));
 });
+
+/* 시작하기 */
+$('#btn-start').addEventListener('click', ()=>{
+  unlockTabs();
+  setTab('character');
+});
+
+/* 캐릭터 선택 → 다음 버튼 활성 */
+const nextBtn = $('#btn-next-to-quest');
+$$("input[name='character']").forEach(r=>{
+  r.addEventListener('change', ()=>{
+    state.character = r.value;
+    nextBtn.disabled = false;
+  });
+});
+
+nextBtn.addEventListener('click', ()=>{
+  // 퀘스트 탭 해제
+  $("[data-tab='quest']").disabled = false;
+  setTab('quest');
+  updateDone();
+});
+
+/* 퀘스트 선택 → 인증 화면 */
+$('#quest-list').addEventListener('click', (e)=>{
+  const btn = e.target.closest('.quest');
+  if(!btn) return;
+  const q = btn.dataset.quest;
+  state.currentQuest = q;
+  showVerify(q);
+});
+
+function showVerify(q){
+  const title = {
+    bin:'분리수거 퀘스트 인증',
+    photo:'포토존 정화 인증',
+    quiz:'만송정 OX 퀴즈 인증',
+    upcycle:'업사이클링 키링 제작 인증',
+    local:'로컬상생 미션 인증'
+  }[q];
+
+  const desc = {
+    bin:'분리수거존 QR 스캔 후 현장 인증 사진(또는 촬영) 제출.',
+    photo:'정화 활동 후 인증샷 촬영/업로드.',
+    quiz:'OX존 문제 풀이 후 현장 표지판과 함께 인증.',
+    upcycle:'체험존에서 제작한 키링을 들고 인증.',
+    local:'제휴상점 참여 미션(스탬프/영수증) 인증.'
+  }[q];
+
+  $('#verify-title').textContent = title;
+  $('#verify-desc').textContent = desc;
+
+  // 버튼 상태 초기화
+  $('#btn-verify-complete').disabled = true;
+  $('#btn-shot').disabled = true;
+  $('#preview').classList.add('hidden');
+  $('#snap').classList.add('hidden');
+  stopCamera();
+
+  setTab('verify');
+}
+
+/* 인증 화면: 카메라 / 파일 업로드 */
+let stream;
+async function startCamera(){
+  try{
+    stream = await navigator.mediaDevices.getUserMedia({video:true});
+    const v = $('#cam');
+    v.srcObject = stream;
+    $('#btn-shot').disabled = false;
+  }catch(e){
+    alert('카메라를 사용할 수 없습니다. 파일 업로드를 이용하세요.');
+  }
+}
+function stopCamera(){
+  if(stream){
+    stream.getTracks().forEach(t=>t.stop());
+    stream = null;
+  }
+}
+
+$('#btn-open-camera').addEventListener('click', startCamera);
+
+$('#btn-shot').addEventListener('click', ()=>{
+  const v = $('#cam');
+  const c = $('#snap');
+  const ctx = c.getContext('2d');
+  c.width = v.videoWidth; c.height = v.videoHeight;
+  ctx.drawImage(v, 0, 0, c.width, c.height);
+  c.classList.remove('hidden');
+  $('#preview').classList.add('hidden');
+  $('#btn-verify-complete').disabled = false;
+});
+
+$('#file-upload').addEventListener('change', (e)=>{
+  const file = e.target.files?.[0];
+  if(!file) return;
+  const url = URL.createObjectURL(file);
+  const img = $('#preview');
+  img.src = url;
+  img.classList.remove('hidden');
+  $('#snap').classList.add('hidden');
+  $('#btn-verify-complete').disabled = false;
+});
+
+$('#btn-back-quest').addEventListener('click', ()=>{
+  stopCamera();
+  setTab('quest');
+});
+
+/* 인증 완료 처리 */
+$('#btn-verify-complete').addEventListener('click', ()=>{
+  if(!state.currentQuest) return;
+  state.quests[state.currentQuest] = true;
+  state.currentQuest = null;
+  stopCamera();
+  updateDone();
+
+  // 모두 완료 시 쿠폰 탭 오픈
+  if(isAllDone()){
+    $("[data-tab='coupon']").disabled = false;
+    setTab('coupon');
+  }else{
+    alert('인증 완료! 다른 퀘스트도 계속해 주세요.');
+    setTab('quest');
+  }
+});
+
+function updateDone(){
+  const count = Object.values(state.quests).filter(Boolean).length;
+  $('#done-count').textContent = count;
+}
+function isAllDone(){
+  return Object.values(state.quests).every(Boolean);
+}
+
+/* 캐시 무효화를 위한 간단한 버전 핀 */
+console.log('Hahoe RPG v5');
