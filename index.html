@@ -127,18 +127,67 @@
     </section>
 
     <!-- 쿠폰 -->
-    <section id="coupons" class="panel hidden">
-      <h2>쿠폰 보상</h2>
-      <p>모은 포인트로 아래 굿즈/체험을 할인 받을 수 있어요.</p>
-      <div class="quests">
-        <div class="qitem center"><img src="./assets/coupons/moodlight.png" alt="무드등" style="max-width:100%"><h4>하회 강변 무드등</h4></div>
-        <div class="qitem center"><img src="./assets/coupons/tal-keyring.png" alt="탈 키링" style="max-width:100%"><h4>탈 키링</h4></div>
-        <div class="qitem center"><img src="./assets/coupons/hanji-diary.png" alt="한지 다이어리" style="max-width:100%"><h4>한지 다이어리</h4></div>
-      </div>
-      <div class="center" style="margin-top:12px">
-        <button class="btn" id="btnBackHome">처음으로</button>
-      </div>
-    </section>
+    <section id="coupons" class="panel hidden" 
+style="background:url('./assets/textures/hanji.jpg') center/cover; border:2px solid #c9b188; box-shadow:0 6px 18px rgba(0,0,0,0.1); border-radius:20px; padding:30px;">
+
+  <div style="text-align:center; margin-bottom:18px;">
+    <img src="./assets/textures/hanok-eaves.png" alt="한옥처마" 
+         style="width:180px; opacity:0.8; margin-bottom:8px;">
+    <h2 style="font-family:'Gungsuh',serif; font-size:36px; color:#3b2a1a; margin:0;">
+      🎁 쿠폰 보상
+    </h2>
+    <p style="font-family:'Gungsuh',serif; color:#5b4631; font-size:17px; margin-top:4px;">
+      하회 수호단의 퀘스트를 모두 완수한 당신께 드립니다 🌿
+    </p>
+  </div>
+
+  <!-- ✅ 쿠폰 이미지 한 줄 정렬 -->
+  <div style="
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      flex-wrap: nowrap;
+      gap: 28px;
+      background-color: rgba(255,255,255,0.7);
+      padding: 20px;
+      border-radius: 16px;
+      border: 1px solid #d6c6a8;
+  ">
+
+    <div style="text-align:center;">
+      <img src="./assets/coupons/moodlight.png" alt="무드등" 
+           style="width:190px; height:190px; object-fit:cover; border-radius:14px; box-shadow:0 4px 10px rgba(0,0,0,0.25); border:3px solid #d8c49a;">
+      <div style="font-family:'Gungsuh',serif; margin-top:10px; color:#4b2c20; font-size:18px;">하회 강변 무드등</div>
+    </div>
+
+    <div style="text-align:center;">
+      <img src="./assets/coupons/tal-keyring.png" alt="탈 키링" 
+           style="width:190px; height:190px; object-fit:cover; border-radius:14px; box-shadow:0 4px 10px rgba(0,0,0,0.25); border:3px solid #d8c49a;">
+      <div style="font-family:'Gungsuh',serif; margin-top:10px; color:#4b2c20; font-size:18px;">탈 키링</div>
+    </div>
+
+    <div style="text-align:center;">
+      <img src="./assets/coupons/hanji-diary.png" alt="한지 다이어리" 
+           style="width:190px; height:190px; object-fit:cover; border-radius:14px; box-shadow:0 4px 10px rgba(0,0,0,0.25); border:3px solid #d8c49a;">
+      <div style="font-family:'Gungsuh',serif; margin-top:10px; color:#4b2c20; font-size:18px;">한지 다이어리</div>
+    </div>
+  </div>
+
+  <!-- ✅ 안내 문구 -->
+  <div style="text-align:center; margin-top:20px;">
+    <p style="font-family:'Gungsuh',serif; font-size:20px; color:#4b2c20; line-height:1.7;">
+      🎉 <strong>굿즈 10% 할인 · 카페 10% 할인 혜택</strong><br>
+      <em>이 화면을 현장 직원에게 보여주세요.</em>
+    </p>
+  </div>
+
+  <div style="text-align:center; margin-top:16px;">
+    <button class="btn" id="btnBackHome"
+      style="font-family:'Gungsuh',serif; background-color:#caa57b; color:#fff; border:none; padding:10px 20px; border-radius:10px; font-size:18px; cursor:pointer;">
+      처음으로 돌아가기
+    </button>
+  </div>
+</section>
 
   </main>
 
