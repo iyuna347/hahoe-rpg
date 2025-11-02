@@ -392,3 +392,62 @@
 </script>
 </body>
 </html>
+<!-- ① 분리수거 상세 -->
+<section id="q-recycle" class="panel hidden">
+  <h2>분리수거 인증</h2>
+  <p>스마트 분리수거존에서 촬영하거나, 현장 인증 사진을 올려주세요.</p>
+  <input id="recycleInput" type="file" accept="image/*" capture="environment">
+  <div class="center" style="margin-top:10px">
+    <button class="btn" data-back>← 목록으로</button>
+    <button class="btn primary" data-done="recycle" disabled>완료</button>
+  </div>
+</section>
+
+<!-- ② 포토존 상세 -->
+<section id="q-photo" class="panel hidden">
+  <h2>포토존 인증</h2>
+  <p>강변/숲길 정화 <b>후</b> 사진을 업로드해주세요.</p>
+  <input id="photoInput" type="file" accept="image/*" capture="environment">
+  <div class="center" style="margin-top:10px">
+    <button class="btn" data-back>← 목록으로</button>
+    <button class="btn primary" data-done="photo" disabled>완료</button>
+  </div>
+</section>
+
+<!-- ③ 만송정 O·X -->
+<section id="q-ox" class="panel hidden">
+  <h2>만송정 O·X 퀴즈</h2>
+  <p>“만송정의 소나무 뿌리는 모래 지형을 고정해 생태계를 지키는 데 도움이 된다.”</p>
+  <div class="ox center" style="margin:12px 0">
+    <button class="btn" data-ox="O">O</button>
+    <button class="btn" data-ox="X">X</button>
+  </div>
+  <p id="oxResult" class="center note"></p>
+  <div class="center" style="margin-top:10px">
+    <button class="btn" data-back>← 목록으로</button>
+    <button class="btn primary" id="btnOxDone" data-done="ox" disabled>완료</button>
+  </div>
+</section>
+
+<!-- ④ 업사이클링 키링 -->
+<section id="q-keyring" class="panel hidden">
+  <h2>업사이클링 키링</h2>
+  <p>제작한 키링 사진을 업로드해주세요.</p>
+  <input id="keyringInput" type="file" accept="image/*">
+  <div class="center" style="margin-top:10px">
+    <button class="btn" data-back>← 목록으로</button>
+    <button class="btn primary" data-done="keyring" disabled>완료</button>
+  </div>
+</section>
+
+<!-- ⑤ 나의 행복 사진 -->
+<section id="q-happy" class="panel hidden">
+  <h2>나의 행복 사진</h2>
+  <p>하회에서 가장 행복했던 순간을 올려주세요.</p>
+  <input id="happyInput" type="file" accept="image/*">
+  <div class="center" style="margin-top:10px">
+    <button class="btn" data-back>← 목록으로</button>
+    <button class="btn primary" data-done="happy" disabled>완료</button>
+  </div>
+</section>
+
