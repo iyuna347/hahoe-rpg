@@ -5,7 +5,22 @@
   --accent:#7b3f00;  /* 한지/목재 포인트 */
   --paper:#f7f3e9;
   --paper-ink:#5a4a3f;
+
+  /* 한옥 처마 높이 공통 변수 추가 */
+  --eaves-h:110px;
 }
+
+*{box-sizing:border-box}
+
+html, body {
+  height: 100%;
+}
+
+/* 모바일일 때는 처마 높이 자동 조정 */
+@media (max-width:560px){
+  :root{ --eaves-h:70px; }
+}
+
 *{box-sizing:border-box}
 html, body {
   height: 100%;
