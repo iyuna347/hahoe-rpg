@@ -316,5 +316,76 @@ body{
   color:#4b2c20;
   font-size:18px;
 }
+/* ===== 상단 처마 띠 (연하게) ===== */
+.hanok-eaves {
+  position: fixed;          /* 페이지 맨 위에 고정 */
+  inset: 0 0 auto 0;        /* top:0; left:0; right:0 */
+  height: 72px;             /* 너무 두껍지 않게 */
+  object-fit: cover;
+  opacity: .11;             /* 연~하게 */
+  z-index: 0;               /* 제일 뒤층 */
+  pointer-events: none;     /* 클릭 방해 X */
+  filter: sepia(.2) saturate(.7) contrast(.9);
+}
+
+/* 타이틀/헤더는 항상 위로 */
+.hero, #siteTitle, .subtitle {
+  position: relative;
+  z-index: 5;
+  /* 처마가 fixed라면 헤더가 가리지 않게 여백 추가 */
+  padding-top: 84px;        /* 화면 맨 위와 타이틀 사이 간격 */
+}
+/* 캐릭터 그리드: 2열(모바일) 기본 */
+.characters {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
+}
+
+/* 캐릭터 카드 */
+.card {
+  background: rgba(255,255,255,.7);
+  border: 1px solid #e5d7bd;
+  border-radius: 14px;
+  padding: 12px;
+  text-align: center;
+  overflow: hidden;             /* 삐져나오는 것 차단 */
+}
+
+/* 썸네일 박스: 정사각형 고정 */
+.card .thumb {
+  width: 100%;
+  aspect-ratio: 1 / 1;          /* 정사각형 */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 이미지: 박스 안에 맞추기 */
+.card img {
+  max-width: 88%;
+  max-height: 88%;
+  object-fit: contain;          /* 자르지 말고 모두 보이게 */
+  display: block;
+}
+
+/* 이름 텍스트 */
+.card .name {
+  margin-top: 8px;
+  font-family: "GungsuhLocal","Gungsuh","Batang",serif;
+  font-size: 18px;
+  color: #4b2c20;
+}
+
+/* 양반 이미지만 상대적으로 작았던 이슈를 보정 (살짝 키우기) */
+.card[data-char="yangban"] img {
+  transform: scale(1.10);       /* 10% 확대 */
+  transform-origin: center;
+}
+
+/* 태블릿 이상에서 4열로 확장(선택) */
+@media (min-width: 900px) {
+  .characters { grid-template-columns: repeat(4, 1fr); }
+}
 
 
