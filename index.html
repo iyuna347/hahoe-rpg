@@ -31,18 +31,6 @@
       url("./assets/textures/hanji.jpg") center/cover fixed no-repeat;
   }
 
-  /* ===== 상단 얇은 처마(연하게, 글자 뒤) ===== */
-  .hanok-eaves{
-    position:fixed; inset:0 0 auto 0;
-    height:68px; width:100%;
-    background:url("./assets/textures/hanok-eaves.png") center/cover no-repeat;
-    opacity:.22; z-index:0; pointer-events:none;
-    filter:sepia(.2) saturate(.9) contrast(.95);
-  }
-  @media (max-width:768px){
-    .hanok-eaves{ height:60px; opacity:.26; }
-  }
-
   /* ===== Hero (제목은 고정 아님) ===== */
   .hero{
     position:relative; z-index:2; text-align:center;
