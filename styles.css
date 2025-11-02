@@ -117,4 +117,42 @@ body {
   opacity: 0.9; /* 살짝 반투명하게 */
 }
 
+/* ===== Character grid: 이미지 크기 통일 ===== */
+#characters .grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
+}
+
+#characters .card {
+  background: rgba(255,255,255,.75);
+  border: 1px solid #d6c6a8;
+  border-radius: 14px;
+  padding: 12px;
+  text-align: center;
+}
+
+#characters .card img{
+  width: 160px;          /* 가로 통일 */
+  height: 190px;         /* 세로 통일 */
+  object-fit: contain;   /* 비율 유지해서 딱 맞추기 */
+  object-position: center;
+  display: block;
+  margin: 0 auto;
+}
+
+#characters .card .name{
+  margin-top: 6px;
+  font-family: "Gungsuh","GungsuhLocal",serif;
+  font-size: 16px;
+  color: #3b2a1a;
+}
+
+/* 모바일일 때 화면에 맞춰 유연하게 */
+@media (max-width: 480px){
+  #characters .card img{
+    width: 42vw;
+    height: 46vw;
+  }
+}
 
