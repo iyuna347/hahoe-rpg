@@ -369,3 +369,4 @@ body{ background: var(--bg); color:var(--ink); }
   .qcard{ height:60px; }
   .q-line{ font-size:15px; }
 }
+.badge.done{ background:#c0a27f; color:#fff; border-color:#c0a27f; }
