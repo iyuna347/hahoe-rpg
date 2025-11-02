@@ -235,3 +235,11 @@ oxDone.addEventListener('click', ()=>{
 /* OX 선택 강조 */
 .ox .btn.active{ background:#caa57b; color:#fff; border-color:#b88a5d; }
 
+/* 시작하기 → 캐릭터 선택으로 전환 */
+const startBtn = document.getElementById('btnStart');
+if (startBtn) {
+  startBtn.addEventListener('click', () => {
+    showPanel('characters');              // 캐릭터 섹션 표시
+    document.querySelector('#characters .card')?.scrollIntoView({behavior:'smooth', block:'start'});
+  });
+}
