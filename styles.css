@@ -316,16 +316,48 @@ body{
   color:#4b2c20;
   font-size:18px;
 }
-/* ===== 상단 처마 띠 (연하게) ===== */
-.hanok-eaves {
-  position: fixed;          /* 페이지 맨 위에 고정 */
+/* ===== 상단 처마(연한 배경 띠) ===== */
+.hanok-eaves{
+  position: fixed;          /* 화면 맨 위에만 고정 */
   inset: 0 0 auto 0;        /* top:0; left:0; right:0 */
-  height: 72px;             /* 너무 두껍지 않게 */
+  height: 48px;             /* 살짝 얇게 */
   object-fit: cover;
-  opacity: .13;             /* 살짝 연하게 */
-  z-index: 0;               /* 제일 뒤층 */
-  pointer-events: none;     /* 클릭 방해 X */
-  filter: sepia(.2) saturate(.7) contrast(.9);
+  opacity: .08;             /* 아주 연하게 */
+  z-index: 0;               /* 가장 뒤 */
+  pointer-events: none;
+  filter: sepia(.2) saturate(.8) contrast(.9);
+}
+
+/* ===== 메인 제목 영역(스크롤에 따라오지 않음) ===== */
+.hero{
+  position: relative;       /* 뒤 처마보다 위층 */
+  z-index: 5;
+  padding-top: 60px;        /* 처마와 겹치지 않도록 최소 여백만 */
+  margin: 0 auto 18px;
+  max-width: 980px;
+  text-align: center;
+}
+
+/* 제목/부제 (두껍고 선명하게) */
+#siteTitle{
+  font-family:"GungsuhLocal","Gungsuh","Batang",serif;
+  font-size: clamp(28px, 7vw, 56px);
+  font-weight: 800;         /* 굵게 */
+  color:#3b2a1a;
+  margin: 0;
+  line-height: 1.15;
+}
+.subtitle{
+  font-family:"GungsuhLocal","Gungsuh","Batang",serif;
+  font-size: clamp(14px, 3.4vw, 22px);
+  color:#5b4631;
+  margin: .35rem 0 0;
+}
+
+/* 태블릿 이상에서 약간만 더 여유 */
+@media (min-width:768px){
+  .hanok-eaves{ height:56px; opacity:.08; }
+  .hero{ padding-top:72px; }
 }
 
 /* 타이틀/헤더는 항상 위로 */
