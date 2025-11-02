@@ -131,3 +131,89 @@ body{
   .hanok-eaves{ height: 64px; opacity: .26; }
   .hero{ padding-top: 52px; margin-top: -10px; }
 }
+/* ===== Theme: 한옥 딥브라운 ===== */
+:root{
+  --ink:#2c1e12;         /* 본문 글자 */
+  --bg:#f7f1e7;          /* 배경 종이톤 */
+  --panel:#fbf7f0;       /* 패널 종이톤 */
+  --brand:#4a3425;       /* 헤더 진갈색 */
+  --brand-ink:#f2e9dc;   /* 헤더 글자 */
+  --pill:#7c5b40;        /* 탭 배경 */
+  --pill-ink:#f6efe6;    /* 탭 글자 */
+  --line:#e6dccb;        /* 카드 테두리 */
+  --ok:#c0a27f;          /* 완료 배지 */
+}
+
+/* 배경 */
+body{ background: var(--bg); color:var(--ink); }
+
+/* 헤더(히어로) – 딥브라운 바 + 은은한 점 장식 */
+.hero{
+  background:
+    radial-gradient(circle at 50% -30px, rgba(255,255,255,.12) 0 6px, transparent 7px) repeat-x 0 8px/32px 22px,
+    linear-gradient(#4a3425,#3e2b1e);
+  color:var(--brand-ink);
+  border-bottom: 4px solid rgba(255,255,255,.08);
+  padding: 64px 16px 20px;
+  text-align:center;
+}
+#siteTitle{ color:var(--brand-ink); font-weight:900; }
+.subtitle{ color:rgba(255,255,255,.85); }
+
+/* 상단 탭(스토리/캐릭터/퀘스트/쿠폰) → 알약형 */
+.tabbar{ gap:12px; margin:16px 0 10px; }
+.tabbar button{
+  background: var(--pill);
+  color: var(--pill-ink);
+  border: none;
+  padding: 12px 18px;
+  border-radius: 999px;
+  box-shadow: 0 2px 0 rgba(0,0,0,.18) inset, 0 4px 10px rgba(0,0,0,.12);
+}
+.tabbar button.active{ filter: brightness(1.08) saturate(1.05); }
+/* 패널(종이카드) */
+.panel{
+  background: var(--panel);
+  border: 1px solid var(--line);
+  box-shadow: 0 8px 24px rgba(0,0,0,.06);
+  border-radius: 16px;
+}
+
+/* 퀘스트 리스트 카드 */
+#quests .qitem{
+  display:flex; align-items:center; justify-content:space-between;
+  gap:12px;
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius: 16px;
+  padding: 16px 14px;
+  box-shadow: 0 6px 14px rgba(0,0,0,.05);
+}
+
+/* 왼쪽: 아이콘 + 텍스트 블록 */
+.q-left{ display:flex; align-items:center; gap:14px; }
+.qi{                           /* 아이콘 원형 배지 */
+  width:40px; height:40px; border-radius:50%;
+  background:#f4eadb; display:grid; place-items:center;
+  font-size:20px;
+}
+.qtext h4{ margin:0 0 6px; font-size:20px; font-weight:800; color:#3d2a1c; }
+.qtext p{ margin:0; color:#6a5846; }
+
+/* 오른쪽: 완료 배지 */
+.badge{
+  min-width:88px; text-align:center;
+  background:#fff7ef; color:#6a5140;
+  border:2px solid var(--ok); border-radius:14px;
+  padding:8px 10px; font-weight:700;
+  box-shadow: 0 2px 0 rgba(0,0,0,.06) inset;
+}
+.badge.done{ background: var(--ok); color:#fff; border-color:var(--ok); }
+
+/* 모바일 간격 */
+@media (max-width:560px){
+  #quests .qitem{ padding:14px 12px; }
+  .qtext h4{ font-size:18px; }
+}
+
+
