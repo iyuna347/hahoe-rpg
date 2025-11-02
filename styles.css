@@ -327,3 +327,54 @@ body{ background: var(--bg); color:var(--ink); }
   box-shadow:0 4px 12px rgba(0,0,0,.08); padding:18px 14px; text-align:center;
 }
 #quests .quests::-webkit-scrollbar{ display:none; }
+/* === 퀘스트 가로 카드: 한 줄 + 가로 스냅 === */
+.quests-row{
+  display:flex;
+  gap:10px;
+  overflow-x:auto;
+  -webkit-overflow-scrolling:touch;
+  scroll-snap-type:x mandatory;
+  padding: 6px 2px;
+}
+
+.qcard{
+  scroll-snap-align:center;
+  display:flex;
+  align-items:center;
+  gap:10px;
+  height:56px;                     /* 얇고 길게 */
+  padding: 0 12px;
+  background:#fbf7f0;              /* 한지 톤 */
+  border:1px solid #e6dccb;        /* 종이 느낌 테두리 */
+  border-radius:14px;
+  box-shadow: 0 4px 12px rgba(0,0,0,.06);
+  white-space:nowrap;               /* 한 줄 */
+  overflow:hidden;                  /* 넘치면 숨김 */
+}
+
+.q-emoji{ font-size:18px; flex:0 0 auto; }
+.q-line{
+  font-family:"GungsuhLocal","Gungsuh","Batang",serif;
+  font-size:14px;                   /* 글씨 작게 */
+  color:#3b2a1a;
+  text-overflow:ellipsis;           /* 길면 … */
+  overflow:hidden;
+  flex: 1 1 auto;                   /* 남은 공간 차지 */
+}
+
+.q-badge{
+  flex:0 0 auto;
+  font-size:12px;
+  padding:6px 8px;
+  background:#fff7ef;
+  color:#6a5140;
+  border:1px solid #c0a27f;
+  border-radius:12px;
+  font-weight:700;
+}
+
+/* 태블릿 이상에서는 살짝 크게 */
+@media (min-width:768px){
+  .qcard{ height:60px; }
+  .q-line{ font-size:15px; }
+}
