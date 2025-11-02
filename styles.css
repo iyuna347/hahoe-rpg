@@ -1,38 +1,96 @@
-@font-face{font-family:'Gungseo';src:local('궁서'),local('Gungseo');}
+/* 한지 느낌 + 궁서체 기본 적용 */
 :root{
-  --ink:#1f2937; --accent:#7c3e0a; --paper:#fffef7;
-  --primary:#2f855a; --primary-ink:#fff;
+  --ink:#1b1b1b;
+  --ink-weak:#4d4d4d;
+  --accent:#8a6b2d;      /* 한옥 목재색 */
+  --accent-weak:#c8b27a;
+  --paper:#faf6ef;       /* 한지 바탕 */
+  --hanok:#5a4631;
 }
+
 *{box-sizing:border-box}
-body.bg{margin:0;background:#f5f1e8 url('assets/hanji.png') repeat; color:var(--ink); font-family: Pretendard, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Apple SD Gothic Neo','Noto Sans KR', sans-serif;}
-.wrap{max-width:980px;margin:0 auto;padding:16px}
-h1{font-family:'Gungseo',serif;font-size:42px;margin:16px 0 4px;color:#111}
-.subtitle{opacity:.8;margin:0 0 16px}
-.tabs{display:flex;gap:8px;margin-bottom:12px}
-.tab{padding:8px 12px;border:1px solid #ddd;background:#fff;border-radius:8px;cursor:pointer}
-.tab[disabled]{opacity:.4;cursor:not-allowed}
-.tab.active{background:#111;color:#fff;border-color:#111}
-.tab-pane{display:none}
-.tab-pane.show{display:block}
-.panel{background:var(--paper);border:1px solid #e5dfcf;border-radius:14px;padding:18px;box-shadow:0 4px 16px rgba(0,0,0,.04)}
-.btn{padding:10px 16px;border-radius:10px;border:1px solid #ccc;background:#fff;cursor:pointer}
-.btn[disabled]{opacity:.5;cursor:not-allowed}
-.btn-primary{background:var(--primary); color:var(--primary-ink); border-color:var(--primary)}
-.cta{margin-top:14px}
-.hint{opacity:.7}
-.grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
-.grid-2{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
-.card{background:#fff;border:1px solid #e5e5e5;border-radius:14px;padding:12px;text-align:center;cursor:pointer;transition:.15s}
-.card:hover{transform:translateY(-2px)}
-.character img{width:100%;height:220px;object-fit:contain;filter:drop-shadow(0 6px 12px rgba(0,0,0,.15));}
-.character input{display:none}
-.character .name{display:block;margin-top:8px;font-weight:700}
-.character input:checked + img, .character input:checked ~ img{outline:3px solid var(--primary);border-radius:12px}
-.progress{margin-top:12px;font-weight:700}
-.verify-box{display:grid;grid-template-columns:1fr;gap:8px;margin-top:10px}
-#cam{width:100%;max-height:280px;background:#000;border-radius:8px}
-#snap,#preview{width:100%;border-radius:8px}
-.hidden{display:none}
-.footer{opacity:.7;margin:20px auto;text-align:center;font-size:14px}
-@media (max-width:900px){.grid-4{grid-template-columns:repeat(2,1fr)}}
+html,body{
+  height:100%;
+  margin:0;
+  color:var(--ink);
+  background:
+    radial-gradient(1200px 600px at 20% 10%, rgba(0,0,0,.02), transparent 70%),
+    radial-gradient(1000px 800px at 80% 90%, rgba(0,0,0,.03), transparent 70%),
+    repeating-linear-gradient( 90deg, rgba(0,0,0,.03) 0 1px, transparent 1px 3px),
+    linear-gradient(#fff0, #fff0), var(--paper);
+  font-family: "궁서", "Gungsuh", "Batang", "Times New Roman", serif;
+  line-height:1.6;
+}
+
+/* 한옥 창살 느낌 프레임 */
+.frame{
+  border:4px solid var(--hanok);
+  border-radius:14px;
+  padding:24px;
+  background:
+    linear-gradient(transparent 0 0) padding-box,
+    repeating-linear-gradient(90deg, rgba(90,70,49,.12) 0 12px, transparent 12px 36px),
+    repeating-linear-gradient(0deg , rgba(90,70,49,.12) 0 12px, transparent 12px 36px);
+  box-shadow:
+    inset 0 0 0 2px rgba(255,255,255,.35),
+    0 10px 24px rgba(0,0,0,.08);
+}
+
+/* 제목(서예 느낌 간격) */
+h1,h2,h3{
+  letter-spacing:.02em;
+  margin:0 0 .6rem;
+  color:var(--hanok);
+}
+h1{font-size:42px}
+h2{font-size:26px}
+
+.nav{
+  display:flex; gap:10px; justify-content:center; margin:18px 0 28px;
+}
+.tab{
+  border:2px solid var(--hanok);
+  background:rgba(255,255,255,.6);
+  padding:8px 16px; border-radius:999px;
+  cursor:pointer; user-select:none;
+}
+.tab.active{ background:var(--accent-weak); color:#20190f; }
+
+.btn{
+  display:inline-flex; align-items:center; justify-content:center;
+  padding:12px 18px; border-radius:12px; cursor:pointer; border:2px solid var(--hanok);
+  background:linear-gradient(#fff, #f2eee6);
+}
+.btn.primary{ background:linear-gradient(#f8f1df,#e8dcbd); border-color:var(--accent); }
+.btn:disabled{ opacity:.45; cursor:not-allowed; }
+
+.grid{ display:grid; gap:16px; }
+.grid.cards{ grid-template-columns:repeat(auto-fit, minmax(220px,1fr)); }
+
+.card{
+  background:rgba(255,255,255,.75);
+  border:2px solid var(--hanok); border-radius:16px; padding:14px;
+  text-align:center;
+}
+.card img{ width:100%; height:220px; object-fit:contain; display:block; }
+
+.notice{ color:var(--ink-weak); font-size:.92rem; }
+
+/* 캐릭터 선택 */
+.characters{ display:grid; grid-template-columns:repeat(auto-fit, minmax(180px,1fr)); gap:16px; }
+.char{
+  background:rgba(255,255,255,.8); border:2px solid var(--hanok); border-radius:18px;
+  padding:12px; cursor:pointer; transition:.2s;
+}
+.char img{ width:100%; height:220px; object-fit:contain; display:block; }
+.char .name{ margin-top:8px; font-weight:700; }
+.char.selected{ outline:4px solid var(--accent); transform:translateY(-2px); }
+
+/* OX 퀴즈 */
+.ox-wrap{ display:flex; gap:16px; justify-content:center; margin-top:14px; }
+.ox{ width:120px; height:120px; border-radius:50%; font-size:42px; }
+.ox.o{ border-color:#2f7d32; background:#e4f3e5; }
+.ox.x{ border-color:#a02222; background:#f9e2e2; }
+
+.footer{ margin:22px 0 8px; text-align:center; color:var(--ink-weak); }
 
