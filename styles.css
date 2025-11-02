@@ -322,7 +322,7 @@ body{
   inset: 0 0 auto 0;        /* top:0; left:0; right:0 */
   height: 72px;             /* 너무 두껍지 않게 */
   object-fit: cover;
-  opacity: .11;             /* 연~하게 */
+  opacity: .13;             /* 살짝 연하게 */
   z-index: 0;               /* 제일 뒤층 */
   pointer-events: none;     /* 클릭 방해 X */
   filter: sepia(.2) saturate(.7) contrast(.9);
@@ -332,9 +332,6 @@ body{
 .hero, #siteTitle, .subtitle {
   position: relative;
   z-index: 5;
-  /* 처마가 fixed라면 헤더가 가리지 않게 여백 추가 */
-  padding-top: 84px;        /* 화면 맨 위와 타이틀 사이 간격 */
-}
 /* 캐릭터 그리드: 2열(모바일) 기본 */
 .characters {
   display: grid;
