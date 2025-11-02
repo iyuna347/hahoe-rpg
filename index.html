@@ -68,72 +68,70 @@
    <!-- 퀘스트 허브 -->
 <section id="quests" class="panel hidden">
   <h2>퀘스트 선택</h2>
-
-  <!-- 진행 현황 줄 추가 -->
   <p id="qProgress" class="note">진행 현황: 0/5 완료</p>
 
   <div class="quests">
-    <div class="qitem" data-go="q-recycle" data-key="recycle"><h4>① 분리수거 퀘스트</h4><p>스마트 분리수거존 인증</p></div>
-    <div class="qitem" data-go="q-photo"   data-key="photo"><h4>② 포토존 퀘스트</h4><p>정화 후 인증샷 업로드</p></div>
-    <div class="qitem" data-go="q-ox"      data-key="ox"><h4>③ 만송정 O·X</h4><p>버튼으로 퀴즈 응답</p></div>
-    <div class="qitem" data-go="q-keyring" data-key="keyring"><h4>④ 업사이클링 키링</h4><p>제작 인증 업로드</p></div>
-    <div class="qitem" data-go="q-happy"   data-key="happy"><h4>⑤ 나의 행복 사진</h4><p>행복한 순간 공유</p></div>
+    <!-- ① 분리수거 퀘스트 -->
+   <div class="qitem" data-go="q-recycle" data-key="recycle">
+  <div class="q-left">
+    <div class="qi">♻️</div>
+    <div class="qtext">
+      <h4>분리수거 퀘스트</h4>
+      <p>스마트 쓰레기통 QR 스캔 후 올바르게 분리수거</p>
+    </div>
   </div>
-</section>
+  <div class="badge" id="badge-recycle">진행중</div>
+</div>
 
-    <!-- ① 분리수거 -->
-    <section id="q-recycle" class="panel hidden">
-      <h2>분리수거 퀘스트</h2>
-      <p>스마트 분리수거존 QR을 인식한 뒤 현장 사진을 올려주세요.</p>
-      <input id="recycleInput" type="file" accept="image/*" capture="environment">
-      <div class="center" style="margin-top:10px">
-        <button class="btn primary" data-done="recycle">완료</button>
+    <!-- ② 포토존 퀘스트 -->
+  <div class="qitem" data-go="q-photo" data-key="photo">
+    <div class="q-left">
+      <div class="qi">📸</div>
+      <div class="qtext">
+        <h4>② 포토존 퀘스트</h4>
+        <p>강변·숲길 정화 후 인증샷을 업로드하세요</p>
       </div>
-    </section>
+    </div>
+    <div class="badge" id="badge-photo">진행중</div>
+  </div>
 
-    <!-- ② 포토존 -->
-    <section id="q-photo" class="panel hidden">
-      <h2>포토존 퀘스트</h2>
-      <p>강변/숲길 정화 전·후 중 '후' 사진을 업로드 해주세요.</p>
-      <input id="photoInput" type="file" accept="image/*" capture="environment">
-      <div class="center" style="margin-top:10px">
-        <button class="btn primary" data-done="photo">완료</button>
+   <!-- ③ 만송정 O·X -->
+  <div class="qitem" data-go="q-ox" data-key="ox">
+    <div class="q-left">
+      <div class="qi">🌲</div>
+      <div class="qtext">
+        <h4>③ 만송정 O·X 퀴즈</h4>
+        <p>만송정 숲의 생태와 환경을 주제로 한 O·X 퀴즈 풀기</p>
       </div>
-    </section>
+    </div>
+    <div class="badge" id="badge-ox">진행중</div>
+  </div>
 
-    <!-- ③ 만송정 OX -->
-    <section id="q-ox" class="panel hidden">
-      <h2>만송정 O·X 퀴즈</h2>
-      <p>만송정 숲의 소나무 뿌리는 모래 지형을 고정하고 생태계를 지키는 데 도움이 된다.</p>
-      <div class="ox">
-        <button class="btn" data-ox="O">O</button>
-        <button class="btn" data-ox="X">X</button>
-      </div>
-      <div id="oxResult" class="center note"></div>
-      <div class="center" style="margin-top:10px">
-        <button class="btn primary" data-done="ox" disabled id="btnOxDone">완료</button>
-      </div>
-    </section>
 
     <!-- ④ 업사이클링 키링 -->
-    <section id="q-keyring" class="panel hidden">
-      <h2>업사이클링 키링</h2>
-      <p>11개 탈 중 원하는 디자인으로 제작한 사진을 업로드해주세요.</p>
-      <input id="keyringInput" type="file" accept="image/*">
-      <div class="center" style="margin-top:10px">
-        <button class="btn primary" data-done="keyring">완료</button>
+  <div class="qitem" data-go="q-keyring" data-key="keyring">
+    <div class="q-left">
+      <div class="qi">🧵</div>
+      <div class="qtext">
+        <h4>④ 업사이클링 키링</h4>
+        <p>11개 탈 중 원하는 디자인으로 제작한 키링 인증하기</p>
       </div>
-    </section>
+    </div>
+    <div class="badge" id="badge-keyring">진행중</div>
+  </div>
 
-    <!-- ⑤ 나의 행복 사진 -->
-    <section id="q-happy" class="panel hidden">
-      <h2>나의 행복 사진</h2>
-      <p>하회에서 가장 행복했던 순간을 올려주세요.</p>
-      <input id="happyInput" type="file" accept="image/*">
-      <div class="center" style="margin-top:10px">
-        <button class="btn primary" data-done="happy">완료</button>
+     <!-- ⑤ 나의 행복 사진 -->
+  <div class="qitem" data-go="q-happy" data-key="happy">
+    <div class="q-left">
+      <div class="qi">😊</div>
+      <div class="qtext">
+        <h4>⑤ 나의 행복 사진</h4>
+        <p>하회에서 가장 행복했던 순간을 사진으로 공유하기</p>
       </div>
-    </section>
+    </div>
+    <div class="badge" id="badge-happy">진행중</div>
+  </div>
+</div>
 
     <!-- 쿠폰 -->
     <section id="coupons" class="panel hidden" 
