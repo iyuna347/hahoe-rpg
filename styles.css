@@ -7,14 +7,17 @@
   --paper-ink:#5a4a3f;
 }
 *{box-sizing:border-box}
-html,body{height:100%}
-body{
-  margin:0;
-  font-family:"GungsuhLocal","Gungsuh","Batang",serif;
-  color:var(--ink);
+html, body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: "GungsuhLocal", "Gungsuh", "Batang", serif; /* 궁서체 유지 */
+  color: #2b1e0f; /* 따뜻한 갈색톤 글씨 */
   background:
-    linear-gradient(rgba(255,255,255,.85),rgba(255,255,255,.85)),
-    url("./assets/textures/hanji.jpg") center/cover fixed no-repeat; /* 한지 텍스처 이미지(없으면 추가) */
+    linear-gradient(rgba(255, 255, 255, 0.85), rgba(255, 255, 255, 0.85)), /* 반투명 필터 */
+    url("./assets/textures/hanji.jpg") center/cover fixed no-repeat; /* 한지 배경 */
 }
 
 /* 한옥 상단 프레임 느낌 */
