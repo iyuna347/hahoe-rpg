@@ -263,17 +263,6 @@ body{
   position:relative; z-index:5;
 }
 
-/* (4) 타이틀이 처마랑 겹치지 않게 위쪽 여백 */
-.hero { padding-top: 80px; }
-/* 캐릭터 카드 이미지를 동일 박스 크기로 */
-.characters .card img{
-  width: 180px;            /* 박스 크기 통일 */
-  height: 180px;
-  object-fit: contain;     /* 원본 비율 유지 */
-  display:block;
-  margin: 0 auto;
-}
-
 /* 카드 자체 간격/레이아웃 보정(선택) */
 .characters {
   display:grid;
