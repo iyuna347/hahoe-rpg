@@ -268,3 +268,52 @@ body{ background: var(--bg); color:var(--ink); }
     grid-template-columns: 1fr; /* 한 줄씩 */
   }
 }
+/* === 퀘스트 선택: 가로 스크롤 카드형 레이아웃 === */
+#quests .quests {
+  display: flex;                     /* 세로 → 가로 배치 */
+  overflow-x: auto;                  /* 가로 스크롤 가능 */
+  -webkit-overflow-scrolling: touch; /* 모바일 부드러운 스크롤 */
+  gap: 16px;                         /* 카드 사이 여백 */
+  padding: 12px 8px;
+  scroll-snap-type: x mandatory;     /* 스냅 효과 */
+}
+
+#quests .qitem {
+  flex: 0 0 78vw;                    /* 화면의 약 78% 너비 */
+  max-width: 340px;                  /* 데스크탑 상한 */
+  scroll-snap-align: center;
+  background: #fff;
+  border: 1px solid #d6c6a8;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0,0,0,.08);
+  padding: 18px 14px;
+  text-align: center;
+  transition: transform .2s ease;
+}
+
+#quests .qitem:hover {
+  transform: translateY(-4px);
+}
+
+#quests .qitem h4 {
+  margin: 6px 0;
+  font-size: 20px;
+  font-weight: 700;
+  color: #3b2a1a;
+}
+
+#quests .qitem p {
+  margin: 0;
+  font-size: 16px;
+  color: #6a5846;
+}
+
+/* 모바일에서는 더 꽉 차게 */
+@media (max-width: 560px) {
+  #quests .qitem { flex: 0 0 84vw; }
+}
+
+/* 스크롤바 감추기 (디자인 깔끔하게) */
+#quests .quests::-webkit-scrollbar {
+  display: none;
+}
