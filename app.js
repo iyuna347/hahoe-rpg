@@ -1,142 +1,161 @@
 /* =========================
-   hahoe-rpg / app.js (clean)
-   Flow: Story -> Characters -> Quests -> (complete 5) -> Coupons
+   hahoe-rpg / app.js  (FINAL)
    ========================= */
 
 document.addEventListener('DOMContentLoaded', () => {
-  /* ---------- Utils ---------- */
-  const $  = (sel) => document.querySelector(sel);
-  const $$ = (sel) => document.querySelectorAll(sel);
+  /* ---------- Shorthands ---------- */
+  const $  = (sel, root=document) => root.querySelector(sel);
+  const $$ = (sel, root=document) => root.querySelectorAll(sel);
 
-  function showPanel(id) {
+  /* ---------- Panels ---------- */
+  function showPanel(id){
     $$('.panel').forEach(p => p.classList.add('hidden'));
     const tgt = document.getElementById(id);
-    if (tgt) tgt.classList.remove('hidden');
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    if (tgt) {
+      tgt.classList.remove('hidden');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
   }
 
   /* ---------- Progress (localStorage) ---------- */
-  const KEYS = ['recycle', 'photo', 'ox', 'keyring', 'happy'];
-  let progress = JSON.parse(localStorage.getItem('hahoe-progress') || '{}');
-  KEYS.forEach(k => { if (typeof progress[k] !== 'boolean') progress[k] = false; });
+  const STORE_KEY = 'hahoe-progress';
+  const KEYS = ['recycle','photo','ox','keyring','happy']; // 5개
 
-  function save() {
-    localStorage.setItem('hahoe-progress', JSON.stringify(progress));
+  function loadProgress(){
+    try{
+      const p = JSON.parse(localStorage.getItem(STORE_KEY) || '{}');
+      KEYS.forEach(k => { if (typeof p[k] !== 'boolean') p[k] = false; });
+      return p;
+    }catch(e){
+      return { recycle:false, photo:false, ox:false, keyring:false, happy:false };
+    }
   }
+  function saveProgress(p){ localStorage.setItem(STORE_KEY, JSON.stringify(p)); }
 
-  function updateUI() {
-    // text
-    const done = KEYS.filter(k => progress[k]).length;
-    const label = $('#qProgress');
-    if (label) label.textContent = `진행 현황: ${done}/5 완료`;
+  let progress = loadProgress();
 
-    // badges
+  function updateBadgesAndCounter(){
+    // 진행 텍스트
+    const doneCount = KEYS.filter(k => progress[k]).length;
+    const progEl = $('#qProgress');
+    if (progEl) progEl.textContent = `진행 현황: ${doneCount}/5 완료`;
+
+    // 배지 업데이트
     KEYS.forEach(k => {
       const b = document.getElementById(`badge-${k}`);
       if (!b) return;
-      b.textContent = progress[k] ? '완료' : '대기';
-      b.classList.toggle('done', !!progress[k]);
+      if (progress[k]) {
+        b.textContent = '완료';
+        b.classList.add('done');
+      } else {
+        b.textContent = '대기';
+        b.classList.remove('done');
+      }
     });
 
-    // auto open coupons if all done
-    if (done === KEYS.length) {
-      showPanel('coupons');
-    }
+    // 전부 완료 → 쿠폰
+    if (doneCount === KEYS.length) showPanel('coupons');
   }
 
-  function markDone(key) {
+  function markDone(key){
     if (!KEYS.includes(key)) return;
     progress[key] = true;
-    save();
-    const count = KEYS.filter(k => progress[k]).length;
-    if (count === KEYS.length) {
-      showPanel('coupons');
-    } else {
-      showPanel('quests');
-    }
-    updateUI();
+    saveProgress(progress);
+    updateBadgesAndCounter();
+
+    // 모두 완료면 쿠폰, 아니면 허브로 복귀
+    const doneCount = KEYS.filter(k => progress[k]).length;
+    showPanel(doneCount === KEYS.length ? 'coupons' : 'quests');
   }
 
-  /* ---------- 0) Start ---------- */
-  showPanel('story');
-  updateUI();
+  /* ---------- 0) 초기 화면 ---------- */
+  showPanel('story');          // 스토리부터 시작
+  updateBadgesAndCounter();    // 진행도 & 배지 반영
 
-  $('#btnStart')?.addEventListener('click', () => {
-    showPanel('characters');
-  });
+  /* ---------- 1) 시작하기 → 캐릭터 ---------- */
+  // (중복 방지 + 방어적 바인딩)
+  const startBtn = document.getElementById('btnStart');
+  if (startBtn) {
+    startBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      showPanel('characters');
+      $('#characters .card')?.scrollIntoView({ behavior:'smooth', block:'start' });
+    }, { once:true });
+  }
 
-  /* ---------- 1) Character select ---------- */
+  /* ---------- 2) 캐릭터 선택 → 다음 ---------- */
   let selectedChar = null;
-  $$('#characters .card').forEach(card => {
+  const charCards = $$('#characters .card');
+  const btnCharNext = document.getElementById('btnCharNext');
+
+  charCards.forEach(card => {
     card.addEventListener('click', () => {
-      $$('#characters .card').forEach(c => c.classList.remove('selected'));
+      charCards.forEach(c => c.classList.remove('selected'));
       card.classList.add('selected');
       selectedChar = card.dataset.char || null;
-      $('#btnCharNext').disabled = !selectedChar;
+      if (btnCharNext) btnCharNext.disabled = !selectedChar;
     });
   });
 
-  $('#btnCharNext')?.addEventListener('click', () => {
+  btnCharNext?.addEventListener('click', () => {
     if (!selectedChar) return;
     showPanel('quests');
-    updateUI();
+    updateBadgesAndCounter();
   });
 
-  /* ---------- 2) Quests hub -> details ---------- */
+  /* ---------- 3) 퀘스트 허브: 카드 클릭 → 상세 ---------- */
+  // HTML에서 퀘스트 카드는 .qcard (button) 이고, data-go 로 이동할 타겟 id를 가짐.
   $$('#quests .qcard').forEach(card => {
     card.addEventListener('click', () => {
-      const target = card.getAttribute('data-go'); // q-recycle / q-photo ...
+      const target = card.getAttribute('data-go'); // 예: "q-recycle"
       if (target) showPanel(target);
     });
   });
 
-  /* ---------- 3) Back buttons ---------- */
-  $$('[data-back]').forEach(btn => {
-    btn.addEventListener('click', () => showPanel('quests'));
+  /* ---------- 4) 파일 인증형 4개 퀘스트 ---------- */
+  // 파일 고르면 완료 버튼 활성화 → 완료 클릭 시 markDone
+  const fileQuests = [
+    { input:'#recycleInput', done:'#btnRecycleDone', key:'recycle' },
+    { input:'#photoInput',   done:'#btnPhotoDone',   key:'photo'   },
+    { input:'#keyringInput', done:'#btnKeyDone',     key:'keyring' },
+    { input:'#happyInput',   done:'#btnHappyDone',   key:'happy'   },
+  ];
+
+  fileQuests.forEach(({input, done, key}) => {
+    const $input = $(input);
+    const $done  = $(done);
+    if (!$input || !$done) return;
+
+    $input.addEventListener('change', () => {
+      $done.disabled = !($input.files && $input.files.length > 0);
+    });
+    $done.addEventListener('click', () => markDone(key));
   });
 
-  /* ---------- 4) File quests (4) ---------- */
-  [
-    ['#recycleInput', '#btnRecycleDone', 'recycle'],
-    ['#photoInput',   '#btnPhotoDone',   'photo'  ],
-    ['#keyringInput', '#btnKeyDone',     'keyring'],
-    ['#happyInput',   '#btnHappyDone',   'happy'  ],
-  ].forEach(([inputSel, btnSel, key]) => {
-    const input = $(inputSel);
-    const btn   = $(btnSel);
-    if (!input || !btn) return;
-
-    // enable button when a file selected
-    input.addEventListener('change', () => {
-      btn.disabled = !(input.files && input.files.length > 0);
-    });
-
-    // mark done
-    btn.addEventListener('click', () => {
-      if (!(input.files && input.files.length > 0)) return;
-      markDone(key);
-    });
-  });
-
-  /* ---------- 5) OX quest ---------- */
+  /* ---------- 5) 만송정 O·X 퀴즈 ---------- */
   const OX_CORRECT = 'O';
   let oxChoice = null;
 
-  $$('#q-ox [data-ox]').forEach(b => {
-    b.addEventListener('click', () => {
-      oxChoice = b.dataset.ox;
-      $$('#q-ox [data-ox]').forEach(x => x.classList.remove('active'));
-      b.classList.add('active');
+  $$('#q-ox [data-ox]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      oxChoice = btn.dataset.ox;
+      // active 스타일 토글
+      $$('#q-ox [data-ox]').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
 
+      // 피드백
       const r = $('#oxResult');
       if (oxChoice === OX_CORRECT) {
-        r.textContent = '정답! 만송정 소나무의 뿌리는 모래 지형을 지지해 생태계에 도움을 줍니다.';
+        r.textContent = '정답입니다! 🌲 만송정 소나무는 모래 지형을 단단히 잡아줍니다.';
         r.style.color = '#246b2b';
       } else {
-        r.textContent = '아쉬워요. 정답은 O 입니다. 🌲';
+        r.textContent = '아쉬워요! 정답은 O 입니다.';
         r.style.color = '#a14a2a';
       }
-      $('#btnOxDone').disabled = false; // 학습형: 선택하면 진행 가능
+      // 학습형: 선택만 하면 완료 버튼 활성화
+      const oxDone = $('#btnOxDone');
+      if (oxDone) oxDone.disabled = false;
     });
   });
 
@@ -145,14 +164,9 @@ document.addEventListener('DOMContentLoaded', () => {
     markDone('ox');
   });
 
-  /* ---------- 6) Coupons -> Home ---------- */
-  $('#btnBackHome')?.addEventListener('click', () => {
-    showPanel('story');
-  });
-});
-
-  // data-back 붙은 버튼은 항상 퀘스트 허브로
+  /* ---------- 6) 공통: 뒤로가기 / 처음으로 ---------- */
+  // 상세 퀘스트에서 "목록으로" 버튼 → 허브
   $$('[data-back]').forEach(b => b.addEventListener('click', () => showPanel('quests')));
-  // 쿠폰에서 집으로
+  // 쿠폰에서 "처음으로"
   $('#btnBackHome')?.addEventListener('click', () => showPanel('story'));
 });
