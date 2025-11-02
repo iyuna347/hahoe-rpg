@@ -1,65 +1,51 @@
 /* =========================
-   HAHOE THEME – HANOK DEEP-BROWN
-   (replace entire styles.css)
+   styles.css  (hahoe-rpg)
    ========================= */
 
-/* 0) Font: 궁서 우선 */
+/* --- Base: 궁서 + 한지톤 -------------------------------------------------- */
 @font-face{font-family:"GungsuhLocal";src:local("궁서"),local("Gungsuh");}
 
-/* 1) Theme Tokens */
 :root{
-  --ink:#2c1e12;         /* 본문 글자 */
-  --bg:#f7f1e7;          /* 전체 배경(한지톤) */
-  --panel:#fbf7f0;       /* 카드/패널 배경 */
-  --line:#e6dccb;        /* 테두리 */
-  --shadow:0 8px 24px rgba(0,0,0,.06);
-
-  --brand:#4a3425;       /* 상단 바(딥브라운) */
-  --brand-ink:#f2e9dc;   /* 상단 바 글자 */
-
-  --pill:#7c5b40;        /* 버튼 바탕 */
-  --pill-ink:#f6efe6;    /* 버튼 글자 */
-
-  --ok:#c0a27f;          /* 완료/포인트 컬러 */
+  --ink:#2c1e12;      /* 본문 글자 */
+  --bg:#f7f1e7;       /* 종이톤 배경 */
+  --panel:#fbf7f0;    /* 카드 바탕 */
+  --line:#e6dccb;     /* 얇은 테두리 */
+  --pill:#7c5b40;     /* 버튼/포인트 */
+  --pill-ink:#f6efe6; /* 버튼 글자 */
+  --ok:#c0a27f;       /* 완료 배지 */
 }
 
-/* 2) Base */
 *{box-sizing:border-box}
 html,body{height:100%}
+
 body{
   margin:0;
-  color:var(--ink);
   font-family:"GungsuhLocal","Gungsuh","Batang",serif;
+  color:var(--ink);
   background:
     linear-gradient(rgba(255,255,255,.86),rgba(255,255,255,.86)),
     url("./assets/textures/hanji.jpg") center/cover fixed no-repeat;
 }
 
-/* (선택) 혹시 남아있는 처마 이미지가 있다면 보이지 않게 */
-.hanok-eaves{ display:none !important; }
-
-/* 공통 유틸 */
 .hidden{display:none}
 .center{text-align:center}
 .note{color:#7a6a58;font-size:14px}
 
-/* 3) HERO (상단 제목 영역: 처마 대신 딥브라운 바) */
+/* --- Header / Hero --------------------------------------------------------- */
 .hero{
   background:
     radial-gradient(circle at 50% -30px, rgba(255,255,255,.12) 0 6px, transparent 7px) repeat-x 0 8px/32px 22px,
-    linear-gradient(var(--brand), #3e2b1e);
-  color:var(--brand-ink);
-  border-bottom: 4px solid rgba(255,255,255,.08);
-  padding: 56px 16px 20px;
+    linear-gradient(#4a3425,#3e2b1e);
+  color:#f2e9dc;
+  border-bottom:4px solid rgba(255,255,255,.08);
+  padding:48px 16px 18px;
   text-align:center;
 }
 #siteTitle{
   margin:0;
   font-weight:900;
-  color:var(--brand-ink);
   font-size:clamp(28px,7vw,56px);
   line-height:1.15;
-  text-shadow: 0 1px 0 rgba(0,0,0,.35);
 }
 .subtitle{
   margin:.35rem 0 0;
@@ -67,18 +53,18 @@ body{
   font-size:clamp(14px,3.4vw,22px);
 }
 
-/* 4) Layout */
-.container{max-width:980px; margin:0 auto; padding:0 16px;}
+/* --- Layout / Panels ------------------------------------------------------- */
+.container{max-width:980px;margin:0 auto;padding:0 16px}
 .panel{
   background:var(--panel);
   border:1px solid var(--line);
-  box-shadow:var(--shadow);
+  box-shadow:0 10px 22px rgba(0,0,0,.06);
   border-radius:16px;
   padding:20px;
   margin:14px 0;
 }
 
-/* 5) Buttons */
+/* --- Buttons --------------------------------------------------------------- */
 .btn{
   background:var(--pill);
   color:var(--pill-ink);
@@ -87,128 +73,80 @@ body{
   padding:12px 18px;
   cursor:pointer;
   font-family:"GungsuhLocal","Gungsuh","Batang",serif;
-  box-shadow: 0 2px 0 rgba(0,0,0,.18) inset, 0 4px 10px rgba(0,0,0,.12);
+  box-shadow:0 2px 0 rgba(0,0,0,.18) inset, 0 4px 10px rgba(0,0,0,.12);
 }
 .btn:disabled{opacity:.45;cursor:not-allowed}
 
-/* 6) Characters (모바일 2열, 데스크톱 4열) */
+/* --- Characters ------------------------------------------------------------ */
 .characters{
-  display:grid;
-  grid-template-columns:repeat(2,minmax(0,1fr));
+  display:grid; grid-template-columns:repeat(2,minmax(0,1fr));
   gap:12px;
 }
 .card{
-  background:#f6f0e2;
-  border:1px solid #e7d9c0;
-  border-radius:14px;
-  padding:12px 12px 8px;
-  text-align:center;
-  overflow:hidden;
+  background:#f6f0e2; border:1px solid #e7d9c0; border-radius:14px;
+  padding:12px 12px 8px; text-align:center; overflow:hidden;
   display:flex; flex-direction:column; align-items:center;
   transition:.15s ease; cursor:pointer;
-  box-shadow:0 6px 16px rgba(0,0,0,.05);
 }
 .card:hover{transform:translateY(-2px)}
 .card.selected{outline:3px solid #b67b32}
 .card img{
-  display:block; margin:6px auto 10px;
-  object-fit:contain; max-width:88%;
-  max-height:clamp(140px,34vw,220px);
+  display:block; margin:6px auto 10px; object-fit:contain;
+  max-width:88%; max-height:clamp(140px,34vw,220px);
 }
-.card .name{
-  margin-top:8px; color:#3b2a1a;
-  font-size:clamp(16px,3.8vw,20px);
-}
-.card[data-char="yangban"] img{
-  transform:scale(1.10); transform-origin:center; /* 양반만 살짝 키움 */
-}
+.card[data-char="yangban"] img{ transform:scale(1.10); transform-origin:center; } /* 양반만 보정 */
+.card .name{margin-top:8px;color:#3b2a1a;font-size:clamp(16px,3.8vw,20px)}
+
 @media (min-width:768px){
-  .characters{ grid-template-columns:repeat(4,minmax(0,1fr)); gap:14px; }
-  .card img{ max-height:210px; max-width:90%; }
+  .characters{grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
+  .card img{max-height:210px;max-width:90%}
 }
 
-/* 7) Quests – 가로 한 줄 카드(이모지+텍스트+배지) */
-.quests-row{
-  display:flex;
-  gap:10px;
-  overflow-x:auto;
-  -webkit-overflow-scrolling:touch;
-  scroll-snap-type:x mandatory;
-  padding: 6px 2px;
-}
-.quests-row::-webkit-scrollbar{ display:none; }
+/* --- Quests Hub: 가로 한 줄 카드 ------------------------------------------ */
+.quests-row{display:flex;flex-direction:column;gap:10px}
 
 .qcard{
-  scroll-snap-align:center;
   display:flex; align-items:center; gap:10px;
-  height:56px;
-  padding:0 12px;
-  background:#fbf7f0;
-  border:1px solid var(--line);
-  border-radius:14px;
-  box-shadow:0 4px 12px rgba(0,0,0,.06);
-  white-space:nowrap; overflow:hidden;
-  transition:transform .15s ease;
+  width:100%; padding:10px 12px;
+  background:#fff; border:1px solid var(--line);
+  border-radius:12px; box-shadow:0 4px 10px rgba(0,0,0,.05);
+  font-family:"GungsuhLocal","Gungsuh","Batang",serif;
 }
-.qcard:hover{ transform:translateY(-2px); }
-
-.q-emoji{ font-size:18px; flex:0 0 auto; text-align:center; }
+.q-emoji{flex:0 0 28px; font-size:18px; text-align:center}
 .q-line{
-  flex:1 1 auto;
-  font-size:14px;
-  color:#3b2a1a;
-  text-overflow:ellipsis; overflow:hidden;
+  flex:1 1 auto; font-size:15px; color:#3d2a1c;
+  white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
 }
 .q-badge{
-  flex:0 0 auto;
-  font-size:12px;
-  padding:6px 8px;
-  background:#fff7ef;
-  color:#6a5140;
-  border:1px solid var(--ok);
-  border-radius:12px;
-  font-weight:700;
+  flex:0 0 auto; font-size:13px; padding:4px 8px;
+  border:2px solid var(--ok); border-radius:12px;
+  background:#fff7ef; color:#6a5140; font-weight:700;
 }
-.q-badge.done{ background:var(--ok); color:#fff; border-color:var(--ok); }
+.q-badge.done{background:var(--ok); color:#fff}
 
-@media (min-width:768px){
-  .qcard{ height:60px; }
-  .q-line{ font-size:15px; }
-}
+/* --- OX Quest -------------------------------------------------------------- */
+.ox{display:flex;gap:10px;justify-content:center;margin:12px 0}
+.ox .btn{min-width:120px;font-size:22px}
+.ox .btn.active{background:#caa57b;color:#fff}
 
-/* 8) 퀘스트 상세 공통 */
-input[type="file"]{
-  display:block; width:100%;
-  padding:10px; background:#fff;
-  border:1px solid #e7d9c0; border-radius:12px;
-}
-
-/* 9) OX */
-.ox{display:flex; gap:10px; justify-content:center; margin:10px 0}
-.ox .btn{min-width:120px; font-size:22px}
-
-/* 10) Coupons – 모바일 가로 스크롤 + 스냅 */
+/* --- Coupons (모바일 스냅 가로 그리드) ------------------------------------- */
 .coupon-strip{
   display:flex; gap:16px; overflow-x:auto; -webkit-overflow-scrolling:touch;
   scroll-snap-type:x mandatory; padding:12px 10px;
   border-radius:16px; background:rgba(255,255,255,.7); border:1px solid #d6c6a8;
 }
-.coupon-strip::-webkit-scrollbar{ display:none; }
-
 .coupon-item{
   flex:0 0 72vw; max-width:360px; text-align:center; scroll-snap-align:center;
   background:#fff; border:1px solid #e3d3b2; border-radius:14px; padding:10px;
   box-shadow:0 4px 10px rgba(0,0,0,.08);
 }
 .coupon-item img{
-  width:100%; height:48vw; max-height:240px;
-  object-fit:cover; border-radius:14px;
+  width:100%; height:48vw; max-height:240px; object-fit:cover; border-radius:14px;
   border:3px solid #d8c49a; box-shadow:0 4px 10px rgba(0,0,0,.18);
 }
-.coupon-item figcaption{
-  margin-top:8px; color:#4b2c20; font-size:18px;
-}
+.coupon-item figcaption{margin-top:8px;color:#4b2c20;font-size:18px}
+
 @media (min-width:768px){
-  .coupon-item{ flex:0 0 220px; max-width:220px; }
-  .coupon-item img{ height:190px; max-height:190px; }
+  .coupon-item{flex:0 0 220px; max-width:220px}
+  .coupon-item img{height:190px; max-height:190px}
 }
