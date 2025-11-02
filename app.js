@@ -1,93 +1,55 @@
-// 탭 전환 헬퍼
-const $ = (s, p=document) => p.querySelector(s);
-const $$ = (s, p=document) => [...p.querySelectorAll(s)];
-
-const tabs = {
-  story: $('#tab-story'),
-  character: $('#tab-character'),
-  quest: $('#tab-quest'),
-  coupon: $('#tab-coupon')
+// 섹션 표시/숨김
+const show = id => {
+  document.querySelectorAll('main section').forEach(s=>s.classList.add('hidden'));
+  document.getElementById(id).classList.remove('hidden');
+  window.scrollTo({top:0, behavior:'smooth'});
 };
-const navTabs = $$('.tab');
 
-function showTab(name){
-  Object.values(tabs).forEach(el=>el.hidden=true);
-  tabs[name].hidden = false;
-  navTabs.forEach(t=>t.classList.toggle('active', t.dataset.tab===name));
-}
+// 1) 시작 → 캐릭터
+document.getElementById('btnStart').addEventListener('click', ()=> show('characters'));
 
-// ① 시작하기 → 캐릭터 강제 흐름
-$('#startBtn').addEventListener('click', ()=>{
-  showTab('character');
-});
-
-// 내비게이션 탭 클릭(스토리 외엔 캐릭터 선택 전에는 막기)
-navTabs.forEach(t=>{
-  t.addEventListener('click', ()=>{
-    const dest = t.dataset.tab;
-    if(dest!=='story' && !localStorage.getItem('hahoe.character')){
-      alert('먼저 [시작하기] → 캐릭터를 선택해주세요.');
-      return;
-    }
-    showTab(dest);
+// 2) 캐릭터 선택
+let selectedChar = null;
+document.querySelectorAll('.card').forEach(card=>{
+  card.addEventListener('click', ()=>{
+    document.querySelectorAll('.card').forEach(c=>c.classList.remove('selected'));
+    card.classList.add('selected');
+    selectedChar = card.dataset.char;
+    document.getElementById('btnCharNext').disabled = false;
   });
 });
-
-// ② 캐릭터 선택 → 선택해야만 "다음" 활성화
-const charGrid = $('#charGrid');
-const toQuest = $('#toQuest');
-
-charGrid.addEventListener('click', e=>{
-  const card = e.target.closest('.char');
-  if(!card) return;
-  $$('.char', charGrid).forEach(c=>c.classList.remove('selected'));
-  card.classList.add('selected');
-  const id = card.dataset.id;
-  localStorage.setItem('hahoe.character', id);
-  toQuest.disabled = false;
+document.getElementById('btnCharNext').addEventListener('click', ()=>{
+  if(!selectedChar) return;
+  show('quests');
 });
 
-toQuest.addEventListener('click', ()=>{
-  showTab('quest');
+// 3) 퀘스트 허브 → 각 페이지
+document.querySelectorAll('.qitem[data-go]').forEach(item=>{
+  item.addEventListener('click', ()=> show(item.dataset.go));
 });
 
-// ③ 퀘스트 더미 로직 (완료 처리/포인트 적립 흉내)
-let points = Number(localStorage.getItem('hahoe.points')||0);
-function addPoint(n){
-  points += n;
-  localStorage.setItem('hahoe.points', points);
-}
-
-// 분리수거/조각찾기 버튼
-$$('[data-quest]').forEach(btn=>{
+// 4) OX 퀴즈
+let oxAnswer = null; // 정답: O
+document.querySelectorAll('#q-ox [data-ox]').forEach(btn=>{
   btn.addEventListener('click', ()=>{
-    const q = btn.dataset.quest;
-    // 실제에선 QR/지도 등으로 연동. 지금은 즉시 완료 처리.
-    alert('퀘스트 완료! +10 포인트');
-    addPoint(10);
-  });
-});
-
-// ④ 만송정 OX 퀴즈 (버튼만)
-const oxMsg = $('#oxMsg');
-$$('.ox').forEach(b=>{
-  b.addEventListener('click', ()=>{
-    const sel = b.dataset.ox;  // 'O' or 'X'
-    // 예시문항: "만송정 숲은 하회마을 모래언덕을 보호한다 – O"
-    const correct = 'O';
-    if(sel === correct){
-      oxMsg.textContent = '정답! +10 포인트';
-      addPoint(10);
+    oxAnswer = btn.dataset.ox;
+    const res = document.getElementById('oxResult');
+    if(oxAnswer === 'O'){
+      res.textContent = '정답! 만송정 소나무는 모래지형을 지지해 생태계에 도움을 줍니다.';
     }else{
-      oxMsg.textContent = '오답! 다음 기회에…';
+      res.textContent = '아쉬워요! 정답은 O 입니다.';
     }
+    document.getElementById('btnOxDone').disabled = false;
   });
 });
 
-// ⑤ 쿠폰 탭 이동
-$('#toCoupon').addEventListener('click', ()=>{
-  showTab('coupon');
+// 5) 완료 → 포인트 → 쿠폰 (데모: 바로 쿠폰 페이지로)
+document.querySelectorAll('[data-done]').forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    // 여기서 실제로는 업로드 검증/포인트 적립 API를 부를 수 있어요.
+    show('coupons');
+  });
 });
 
-// 첫 진입은 스토리 탭
-showTab('story');
+// 처음으로
+document.getElementById('btnBackHome').addEventListener('click', ()=> show('story'));
